@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'accounts',
     'movies',
     'otts',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
