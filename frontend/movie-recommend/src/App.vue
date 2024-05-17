@@ -1,14 +1,10 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
+import MovieNavbar from "@/components/common/MovieNavbar.vue";
 </script>
 
 <template>
-  <div>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
-  </div>
-
+  <MovieNavbar />
   <RouterView />
 </template>
 
