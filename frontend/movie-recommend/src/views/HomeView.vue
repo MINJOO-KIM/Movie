@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import MovieRecommend from "@/components/MovieRecommend.vue";
+import MovieRecommend from "@/components/movies/MovieRecommend.vue";
 </script>
 
 <style lang="scss" scoped></style>

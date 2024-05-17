@@ -5,7 +5,15 @@ import MovieNavbar from "@/components/common/MovieNavbar.vue";
 
 <template>
   <MovieNavbar />
-  <RouterView />
+  <div class="background">
+    <RouterView />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.background {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+}
+</style>
