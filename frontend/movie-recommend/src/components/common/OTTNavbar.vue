@@ -2,9 +2,9 @@
   <header>
     <nav class="navbar navbar-expand-lg custom-navbar-bg">
       <div class="container-fluid">
-        <RouterLink to="/" class="navbar-brand">
+        <!-- <RouterLink to="/" class="navbar-brand">
           <img :src="logo" alt="Logo" height="30" />
-        </RouterLink>
+        </RouterLink> -->
         <button
           class="navbar-toggler"
           type="button"
