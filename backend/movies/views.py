@@ -35,9 +35,32 @@ def movies_recommend(request):
     # print(directors)
     # print(actors)
 
+
     # random 추천 기능
     last_id = Movie.objects.last().id
     movie_id_list = random.sample(range(1, last_id), 5)
     movies = Movie.objects.filter(pk__in=movie_id_list)
     serializer = MovieListSerializer(instance=movies, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def movie_detail(request, movie_id):
+    try:
+        movie = Movie.objects.get(id=movie_id)
+
+        response_data = {
+            'movieId': movie.id,
+            'posterUrl': movie.poster_url,
+            'title': movie.title,
+            'genres': [genre.get('name') for genre in movie.genres.all().values()],
+            'directors': [director.get('name') for director in movie.directors.all().values()],
+            'actors': [actor.get('name') for actor in movie.actors.all().values()][:10],
+            'rating': movie.rating,
+            'overview': movie.overview,
+            'platforms': [platform.get('name') for platform in movie.platforms.all().values()]
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+    except Movie.DoesNotExist:
+        return Response({"message": "Invalid Movie ID"}, status=status.HTTP_404_NOT_FOUND)
