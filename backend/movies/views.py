@@ -4,10 +4,9 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import Genre, Movie
-from .serializers import GenreSerializer, MovieListSerializer
+from .serializers import GenreSerializer
 from .functions import *
 
-import random
 # Create your views here.
 @api_view(['GET'])
 def all_genres(request):
@@ -30,6 +29,7 @@ def movies_recommend(request):
     print(filtering_infos)
     response_data = recommend_movies(filtering_infos)
     return Response(response_data, status=status.HTTP_200_OK)
+
 
 
 @api_view(['GET'])
