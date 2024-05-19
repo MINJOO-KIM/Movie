@@ -8,7 +8,6 @@ class User(AbstractUser):
     last_name = None
     email = None
     is_staff = None
-    is_active = None
     is_superuser = None
     last_login = None
     date_joined = None
