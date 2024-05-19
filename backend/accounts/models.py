@@ -14,4 +14,4 @@ class User(AbstractUser):
     date_joined = None
 
     username = models.CharField(max_length=100, primary_key=True)
-    password = models.CharField(max_length=100) 
+    password = models.TextField()
