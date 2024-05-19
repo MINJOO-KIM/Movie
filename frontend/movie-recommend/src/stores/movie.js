@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import axios from "axios";
 
 export const useMovieStore = defineStore(
-  "counter",
+  "movie",
   () => {
     const movies = ref([]);
     const API_URL = "http://127.0.0.1:8000";
@@ -11,15 +11,15 @@ export const useMovieStore = defineStore(
     const getMovies = function () {
       axios({
         method: "get",
-        url: `${API_URL}/api/v1/movies/`,
+        url: `${API_URL}/movies/recommend`,
       })
         .then((res) => {
           console.log(res);
-          console.log(res.data);
+          movies.value = res.data;
         })
         .catch((err) => console.log(err));
     };
-    return { movies, API_URL, getMovies };
+    return { movies, getMovies };
   },
   { persist: true }
 );

@@ -3,25 +3,26 @@
     <!-- <RouterLink
       :to="{ name: 'MovieDetailView', params: { movie_id: movie.id } }"
     > -->
-    <!-- <img
-        :src="getImageUrl(movie.poster_path)"
-        class="card-img-top"
-        alt="..."
-      /> -->
     <div class="card-body">
-      <h5 class="card-title">{{ props.movie.title || props.movie.name }}</h5>
-      <div class="card-title">{{ props.movie.overview }}</div>
+      <div>
+        <img
+          :src="`https://image.tmdb.org/t/p/original/${props.movie.poster_path}`"
+          alt="poster-img"
+        />
+      </div>
     </div>
     <!-- </RouterLink> -->
   </div>
 </template>
 
 <script setup>
-const props = defineProps(["movie"]);
-
-// const getImageUrl = (path) => {
-//   return path ? `https://image.tmdb.org/t/p/w500${path}` : "";
-// };
+const props = defineProps({
+  movie: {
+    type: Object,
+    required: true,
+  },
+});
+// console.log(props.movie);
 </script>
 
 <style scoped>
@@ -30,4 +31,8 @@ const props = defineProps(["movie"]);
   color: inherit;
   text-decoration: none;
 }
+.card {
+  color: black !important;
+}
+
 </style>
