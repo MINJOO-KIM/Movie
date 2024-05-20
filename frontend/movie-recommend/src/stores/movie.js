@@ -8,7 +8,7 @@ export const useMovieStore = defineStore(
     const movies = ref([]);
     const API_URL = "http://127.0.0.1:8000";
 
-    const getMovies = function () {
+    const getRecommendMovies = function () {
       axios({
         method: "get",
         url: `${API_URL}/movies/recommend`,
@@ -19,7 +19,9 @@ export const useMovieStore = defineStore(
         })
         .catch((err) => console.log(err));
     };
-    return { movies, getMovies };
+
+    
+    return { movies, getRecommendMovies };
   },
   { persist: true }
 );

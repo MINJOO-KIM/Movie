@@ -13,7 +13,7 @@ import MovieRecommend from "@/components/movies/MovieRecommend.vue";
 const store = useMovieStore();
 
 onMounted(() => {
-  store.getMovies();
+  store.getRecommendMovies();
 });
 </script>
 

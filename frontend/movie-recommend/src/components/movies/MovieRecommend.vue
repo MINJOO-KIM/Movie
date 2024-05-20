@@ -23,10 +23,10 @@ import { useMovieStore } from "@/stores/movie";
 import MovieCard from "@/components/movies/MovieCard.vue";
 
 const store = useMovieStore();
-const { movies, getMovies } = store;
+const { movies, getRecommendMovies } = store;
 
 onMounted(() => {
-  getMovies();
+  getRecommendMovies();
 });
 </script>
 
