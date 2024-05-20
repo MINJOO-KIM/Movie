@@ -1,6 +1,7 @@
 <template>
   <div class="movie-detail-container">
     <div class="movie-poster">
+      <img class="back-btn" src="@/assets/arrow-left-circle.svg" alt="">
       <img
         class="poster-img"
         :src="`https://image.tmdb.org/t/p/w200${props.movie.posterUrl}`"
@@ -180,5 +181,11 @@ button {
   background-color: #171717;
 
   z-index: -1;
+}
+
+.back-btn {
+  margin-bottom: 47px;
+
+  width: 60px;
 }
 </style>
