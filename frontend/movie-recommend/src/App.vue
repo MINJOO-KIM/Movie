@@ -15,8 +15,8 @@ const route = useRoute();
   <div class="background">
   </div>
   <div class="content">
-    <hr>
-    <RouterView/>
+    <hr />
+    <RouterView />
   </div>
 </template>
 
@@ -31,7 +31,7 @@ const route = useRoute();
   top: 0px;
   z-index: -1;
 
-  opacity:55%;
+  opacity: 55%;
 }
 
 .background-img {
@@ -43,9 +43,7 @@ const route = useRoute();
   z-index: -2;
 }
 
-
 .content {
   margin-top: 56px;
 }
-
 </style>
