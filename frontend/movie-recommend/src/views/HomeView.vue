@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>HomeView</p>
     <MovieRecommend />
   </div>
 </template>
