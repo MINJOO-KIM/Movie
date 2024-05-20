@@ -9,6 +9,9 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 
+from otts.models import Party
+from otts.serializers import MyPagePartyListSerializer
+
 import json
 # Create your views here.
 User = get_user_model()
@@ -71,3 +74,20 @@ def logout(request):
 
     return Response({"message":"OK"},
                     status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def my_page(request):
+    user = request.user
+
+    own_parties = Party.objects.filter(owner=user)
+    participate_parteis = Party.objects.filter(participants=user).exclude(id__in=own_parties)
+
+    serializer1 = MyPagePartyListSerializer(instance=own_parties, many=True)
+    serializer2 = MyPagePartyListSerializer(instance=participate_parteis, many=True)
+
+    return Response({
+        "own": serializer1.data,
+        "participate": serializer2.data
+    }, status=status.HTTP_200_OK)

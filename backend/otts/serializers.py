@@ -36,3 +36,12 @@ class PartyModifySerializer(serializers.ModelSerializer):
     class Meta:
         model = Party
         fields = ('id', 'password', 'bankAccount')
+
+
+class MyPagePartyListSerializer(serializers.ModelSerializer):
+
+    participants = serializers.IntegerField(source='participants.count', read_only=True)
+
+    class Meta:
+        model = Party
+        exclude = ('owner',)
