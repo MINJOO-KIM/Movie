@@ -12,6 +12,15 @@
 
     <!-- </RouterLink> -->
   </div>
+  <!-- <div class="">
+    <div>
+      <img
+        class=""
+        :src="`https://image.tmdb.org/t/p/w200${props.movie.posterUrl}`"
+        alt="poster-img"
+      />
+    </div>
+  </div> -->
 </template>
 
 <script setup>
