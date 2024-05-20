@@ -16,10 +16,12 @@ User = get_user_model()
 @api_view(['POST'])
 def signup(request):
     data = json.loads(request.body)
+    print(data)
     username = data.get('username')
 
     # username 이 중복되는 경우
     if User.objects.filter(username=username).exists():
+        print("뭐가 문제지")
         return Response({"message" : "Duplicate username"},
                         status=status.HTTP_409_CONFLICT)
     
@@ -28,7 +30,7 @@ def signup(request):
     encryted_password = make_password(password)
 
     # 유저 정보 저장
-    user = User(username, password=encryted_password)
+    user = User(username=username, password=encryted_password)
     user.save()
 
     return Response({"message":"Success"},
@@ -69,4 +71,3 @@ def logout(request):
 
     return Response({"message":"OK"},
                     status=status.HTTP_200_OK)
-
