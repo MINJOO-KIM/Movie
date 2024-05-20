@@ -38,7 +38,16 @@ def parties(request):
                             status=status.HTTP_200_OK) 
 
     elif request.method == 'GET':
-        party_list = Party.objects.all()
-        serializer = PartyListSerializer(party_list, many=True)
-        return Response(serializer.data,
-                        status=status.HTTP_200_OK)
+
+        try:
+            platform_info = request.GET.get('platforms')
+            platform_ids =list(map(int, platform_info.replace(' ', '').split(',')))
+            party_list = Party.objects.filter(platform__id__in=platform_ids)
+            serializer = PartyListSerializer(party_list, many=True)
+            return Response(serializer.data,
+                            status=status.HTTP_200_OK)
+        except:
+            party_list = Party.objects.all()
+            serializer = PartyListSerializer(party_list, many=True)
+            return Response(serializer.data,
+                            status=status.HTTP_200_OK)
