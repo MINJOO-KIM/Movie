@@ -48,7 +48,10 @@
         </div>
       </div>
     </div>
-    
+  </div>
+
+  <div class="detail-background">
+
   </div>
 </template>
 
@@ -132,13 +135,17 @@ button {
   border: 1px solid white;
   border-radius: 50px;
 
-  width: 65px;
+  box-sizing: content-box;
+  width: 100px;
   height: 30px;
-
-  text-align: center;
 
   background-color: black;
   margin-right: 10px;
+  margin-bottom: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .info-container {
@@ -162,5 +169,16 @@ button {
   margin-left: 28px;
 
   border-radius: 20px;
+}
+
+.detail-background {
+  width: 100vw;
+  height: 100vh;
+
+  position: fixed;
+
+  background-color: #171717;
+
+  z-index: -1;
 }
 </style>
