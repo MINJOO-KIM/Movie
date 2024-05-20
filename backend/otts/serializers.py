@@ -25,3 +25,14 @@ class PartyListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Party
         fields = ('partyId', 'price', 'capacity', 'platformId', 'participants')
+
+
+class PartyModifySerializer(serializers.ModelSerializer):
+
+    id = serializers.CharField(source='account_id')
+    password = serializers.CharField(source='account_password')
+    bankAccount = serializers.CharField(source='bank_account')
+
+    class Meta:
+        model = Party
+        fields = ('id', 'password', 'bankAccount')

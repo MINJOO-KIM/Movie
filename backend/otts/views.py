@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import Platform, Party
-from .serializers import PlatformListSerializer, PartyCreateSerializer, PartyListSerializer
+from .serializers import PlatformListSerializer, PartyCreateSerializer, PartyListSerializer, PartyModifySerializer
 
 from accounts.utils import validate_token
 
@@ -80,6 +80,8 @@ def join_party(request, party_id):
 
     return Response({"message": "Success"}, status=status.HTTP_200_OK)
     
+
+
 @api_view(['DELETE'])
 def withdraw_party(request, party_id):
     result = validate_token(request)
@@ -105,3 +107,26 @@ def withdraw_party(request, party_id):
 
     return Response({"message":"Success"},
                     status=status.HTTP_200_OK)
+
+
+
+@api_view(['PUT'])
+def party(request, party_id):
+    result = validate_token(request)
+    if not result[0]:return result[1]
+
+    if not Party.objects.filter(id=party_id).exists():
+        return Response({"message": "Can't find party"},
+                        status=status.HTTP_404_NOT_FOUND)
+    
+    party = Party.objects.get(id=party_id)
+    user = request.user
+
+    if not party.owner == user:
+        return Response({"message": "Only party owner can modify infos"},
+                        status=status.HTTP_403_FORBIDDEN)
+    
+    serializer = PartyModifySerializer(instance=party, data=request.data, partial=True)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        return Response({"message": "Success"}, status=status.HTTP_200_OK)
