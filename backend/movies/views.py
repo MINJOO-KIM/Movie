@@ -45,7 +45,7 @@ def movie_detail(request, movie_id):
             'genres': [genre.get('name') for genre in movie.genres.all().values()],
             'directors': [director.get('name') for director in movie.directors.all().values()],
             'actors': [actor.get('name') for actor in movie.actors.all().values()][:10],
-            'rating': movie.rating,
+            'rating': round(movie.rating, 1),
             'overview': movie.overview,
             'platforms': [platform.get('name') for platform in movie.platforms.all().values()]
         }
