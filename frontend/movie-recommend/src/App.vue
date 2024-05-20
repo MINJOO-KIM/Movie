@@ -1,10 +1,13 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import MovieNavbar from "@/components/common/MovieNavbar.vue";
+import OTTNavbar from "@/components/common/OTTNavbar.vue";
 </script>
 
 <template>
-  <MovieNavbar />
+  <!-- route 에 따라 Navbar 변경되는 분기 처리 필요 -->
+  <!-- <MovieNavbar /> -->
+  <OTTNavbar />
   <img class="background-img" 
   src="@/assets/main-img.png" alt="">
   <div class="background">
