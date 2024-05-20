@@ -5,13 +5,11 @@ import MovieNavbar from "@/components/common/MovieNavbar.vue";
 
 <template>
   <MovieNavbar />
-  <img class="background-img" 
-  src="C:\Users\SSAFY\Desktop\Movie\frontend\movie-recommend\src\assets\main-img.png" alt="">
-  <div class="background">
-  </div>
+  <img class="background-img" src="@/assets/main-img.png" alt="" />
+  <div class="background"></div>
   <div class="content">
-    <hr>
-    <RouterView/>
+    <hr />
+    <RouterView />
   </div>
 </template>
 
@@ -25,7 +23,7 @@ import MovieNavbar from "@/components/common/MovieNavbar.vue";
   top: 0px;
   z-index: -1;
 
-  opacity:55%;
+  opacity: 55%;
 }
 
 .background-img {
@@ -37,9 +35,7 @@ import MovieNavbar from "@/components/common/MovieNavbar.vue";
   z-index: -2;
 }
 
-
 .content {
   margin-top: 56px;
 }
-
 </style>
