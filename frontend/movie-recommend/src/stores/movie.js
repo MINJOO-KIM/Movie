@@ -12,6 +12,9 @@ export const useMovieStore = defineStore(
       axios({
         method: "get",
         url: `${API_URL}/movies/recommend`,
+        params: {
+          'best-movie': '인터스텔라',
+        }
       })
         .then((res) => {
           console.log(res);

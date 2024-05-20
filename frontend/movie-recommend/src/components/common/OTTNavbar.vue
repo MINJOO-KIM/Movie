@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg custom-navbar-bg">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <!-- <RouterLink to="/" class="navbar-brand">
           <img :src="logo" alt="Logo" height="30" />
@@ -42,5 +42,4 @@ import { ref } from "vue";
 </script>
 
 <style scoped>
-
 </style>
