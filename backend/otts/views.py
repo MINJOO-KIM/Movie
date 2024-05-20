@@ -80,3 +80,28 @@ def join_party(request, party_id):
 
     return Response({"message": "Success"}, status=status.HTTP_200_OK)
     
+@api_view(['DELETE'])
+def withdraw_party(request, party_id):
+    result = validate_token(request)
+    if not result[0]:return result[1]
+
+    if not Party.objects.filter(id=party_id).exists():
+        return Response({"message": "Not exists"},
+                        status=status.HTTP_404_NOT_FOUND)
+    
+    party = Party.objects.get(id=party_id)
+    user = request.user
+
+    # 본인이 만든 파티인 경우 탈퇴 불가능
+    if party.owner == user:
+        return Response({"message": "Can't leave party you've created"},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    if not party.participants.contains(user):
+        return Response({"message": "Can't find participation info"},
+                        status=status.HTTP_400_BAD_REQUEST)
+    
+    party.participants.remove(user)
+
+    return Response({"message":"Success"},
+                    status=status.HTTP_200_OK)
