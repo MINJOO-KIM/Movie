@@ -7,6 +7,7 @@ from .models import Genre, Movie
 from .serializers import GenreSerializer
 from .functions import *
 
+
 # Create your views here.
 @api_view(['GET'])
 def all_genres(request):
@@ -24,6 +25,7 @@ def movies_recommend(request):
         return Response({"message":"best-movie is required"},
                         status=status.HTTP_400_BAD_REQUEST)
     
+
     # 선택 파라미터 및 필수 파라미터 활용해 필터링 정보 만들기
     filtering_infos = make_filtering_infos(request, movie_title_input)
     print(filtering_infos)
