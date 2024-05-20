@@ -36,8 +36,9 @@
           <a :href="getPlatformUrl(platform)" target="_blank" rel="">
             <img :src="getPlatformImage(platform)" alt="" />
           </a>
+          {{ platform }}
         </div>
-        <RouterLink>
+        <RouterLink :to="{ name: 'OTTHomeView' }">
           <button>OTT 계정이 없으신가요?</button>
         </RouterLink>
       </div>
@@ -77,8 +78,6 @@ function getPlatformUrl(platformName) {
       return "https://www.watcha.com/";
     case "disneyplus":
       return "https://www.disneyplus.com/";
-    default:
-      return "#";
   }
 }
 
@@ -92,6 +91,7 @@ function getPlatformImage(platformName) {
       return watchaImage;
   }
 }
+console.log(props.movie.platforms);
 </script>
 
 <style scoped>
