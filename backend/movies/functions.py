@@ -106,6 +106,12 @@ def get_infos_from_request(request):
     director_strs = request.GET.get('directors', None)
     actor_strs = request.GET.get('actors', None)
 
+    if director_strs == "":
+        director_strs = None
+
+    if actor_strs == "":
+        actor_strs = None
+
     genre_ids = []
     if genre_strs != None:
         genre_ids = list(map(int, genre_strs.replace(' ', '').split(',')))

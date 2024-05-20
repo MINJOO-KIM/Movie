@@ -1,5 +1,5 @@
 <template>
-  <div v-if="movie">
+  <div v-if="movie" class="movie-detail-container">
     <MovieDetailInfo :movie="movie" />
   </div>
 </template>
@@ -34,3 +34,11 @@ onMounted(() => {
   fetchMovieDetail(moviePk);
 });
 </script>
+
+<style scoped>
+.movie-detail-container {
+  display: flex;
+  align-items: center;
+  height: 90vh;
+}
+</style>

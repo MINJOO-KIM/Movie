@@ -3,6 +3,7 @@
     <p>HomeView</p>
     <!-- <MovieRecommend /> -->
     <Recommend />
+    <MovieRecommend />
   </div>
 </template>
 
