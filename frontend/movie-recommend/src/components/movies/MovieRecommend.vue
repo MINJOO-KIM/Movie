@@ -1,16 +1,18 @@
 <template>
   <div>
     <h3>당신에게 추천하는 영화는...</h3>
-    <div v-for="movie in movies" :key="movie.id" class="col">
-      <MovieCard :movie="movie" />
+    <div class="card-container">
+      <div v-for="movie in movies" :key="movie.id" class="col">
+        <MovieCard :movie="movie" />
+      </div>
     </div>
     <div class="btn-area">
       <button class="btn d-flex">
-        <img src="@/assets/movie-repeat.svg" alt="repeat-icon" />
+        <img class="icon" src="@/assets/movie-repeat.svg" alt="repeat-icon" />
         <div class="btn-text">다른 영화도 보여주세요</div>
       </button>
       <button class="btn d-flex">
-        <img src="@/assets/recommend-rewrite.svg" alt="rewrite-icon" />
+        <img class="icon" src="@/assets/recommend-rewrite.svg" alt="rewrite-icon" />
         <div class="btn-text">취향을 다시 입력할래요</div>
       </button>
     </div>
@@ -40,12 +42,40 @@ button {
   align-items: center;
   margin-bottom: 16px;
 }
-img {
+
+.icon {
   /* margin-left: 10px; */
   width: 40px;
 }
 .btn-text {
   font-size: 20px;
   margin-left: 10px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+
+  flex-wrap: wrap;
+
+  margin: 10px;
+  margin-top: 40px;
+  /* border: 1px solid white; */
+
+  padding: 10px;
+}
+
+.col {
+  height: max(300px, 25vw);
+  cursor: pointer;
+}
+
+.btn-area {
+  margin-top: 60px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

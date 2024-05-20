@@ -5,15 +5,41 @@ import MovieNavbar from "@/components/common/MovieNavbar.vue";
 
 <template>
   <MovieNavbar />
+  <img class="background-img" 
+  src="C:\Users\SSAFY\Desktop\Movie\frontend\movie-recommend\src\assets\main-img.png" alt="">
   <div class="background">
-    <RouterView />
+  </div>
+  <div class="content">
+    <hr>
+    <RouterView/>
   </div>
 </template>
 
 <style scoped>
 .background {
+  background-color: black;
   width: 100vw;
   height: 100vh;
-  background-color: black;
+
+  position: fixed;
+  top: 0px;
+  z-index: -1;
+
+  opacity:55%;
 }
+
+.background-img {
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+  height: 100vh;
+
+  z-index: -2;
+}
+
+
+.content {
+  margin-top: 56px;
+}
+
 </style>

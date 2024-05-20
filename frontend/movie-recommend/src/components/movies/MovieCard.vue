@@ -1,17 +1,15 @@
 <template>
-  <div class="card h-100 d-flex">
+  <div class="card-content">
     <!-- <RouterLink
       :to="{ name: 'MovieDetailView', params: { movie_id: movieId } }"
     /> -->
-    <div class="card-body">
-      <div>
-        <img
-          class=""
-          :src="`https://image.tmdb.org/t/p/w500${props.movie.posterUrl}`"
-          alt="poster-img"
-        />
-      </div>
-    </div>
+
+    <img
+      class=""
+      :src="`https://image.tmdb.org/t/p/w500${props.movie.posterUrl}`"
+      alt="poster-img"
+    />
+
     <!-- </RouterLink> -->
   </div>
 </template>
@@ -23,16 +21,20 @@ const props = defineProps({
     required: true,
   },
 });
+
 console.log(props.movie);
 </script>
 
 <style scoped>
-.card a,
-.card a:hover {
-  color: inherit;
-  text-decoration: none;
+img {
+  width: 100%;
+  height: 100%;
 }
-.card {
-  color: black !important;
+
+.card-content {
+  height: 100%;
+  width: max(200px, 18vw);
+
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 </style>

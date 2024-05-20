@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg custom-navbar-bg" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg custom-navbar-bg fixed-top" data-bs-theme="dark">
       <div class="container-fluid">
         <!-- <RouterLink to="/" class="navbar-brand">
           <img :src="logo" alt="Logo" height="30" />
@@ -25,7 +25,7 @@
               to="/ai-recommend"
               class="nav-link"
               active-class="active-tab"
-              >AI 추천</RouterLink
+              >AI 추천</RouterLink
             >
             <RouterLink to="/otts" class="nav-link" active-class="active-tab"
               >OTT 공유</RouterLink
@@ -42,12 +42,11 @@ import { ref } from "vue";
 </script>
 
 <style scoped>
-nav {
-  border: 0.3px solid white;
-}
 .custom-navbar-bg {
   background-color: black !important;
   color: white;
+  margin-bottom: 0px;
+  
 }
 .nav-link {
   color: white;
