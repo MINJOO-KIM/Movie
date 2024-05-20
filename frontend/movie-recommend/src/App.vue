@@ -6,7 +6,7 @@ import MovieNavbar from "@/components/common/MovieNavbar.vue";
 <template>
   <MovieNavbar />
   <img class="background-img" 
-  src="C:\Users\SSAFY\Desktop\Movie\frontend\movie-recommend\src\assets\main-img.png" alt="">
+  src="@/assets/main-img.png" alt="">
   <div class="background">
   </div>
   <div class="content">
