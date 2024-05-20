@@ -31,11 +31,30 @@
       </div>
       <p><strong>평점:</strong> {{ movie.rating }}</p>
       <p><strong>줄거리:</strong> {{ movie.overview }}</p>
+      <div class="platform-box">
+        <div v-for="platform in props.movie.platforms" :key="platform.name">
+          <a :href="getPlatformUrl(platform)" target="_blank" rel="">
+            <img :src="getPlatformImage(platform)" alt="" />
+          </a>
+        </div>
+        <RouterLink>
+          <button>OTT 계정이 없으신가요?</button>
+        </RouterLink>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import axios from "axios";
+import { onMounted } from "vue";
+import { useMovieStore } from "@/stores/movie";
+import MovieCard from "@/components/movies/MovieCard.vue";
+
+import netflixImage from "@/assets/netflix.svg";
+import watchaImage from "@/assets/watcha.svg";
+import disneyplusImage from "@/assets/disneyplus.svg";
+
 const store = useMovieStore();
 const { movies, getRecommendMovies } = store;
 
@@ -49,6 +68,30 @@ const props = defineProps({
     required: true,
   },
 });
+
+function getPlatformUrl(platformName) {
+  switch (platformName.toLowerCase()) {
+    case "netflix":
+      return "https://www.netflix.com/";
+    case "watcha":
+      return "https://www.watcha.com/";
+    case "disneyplus":
+      return "https://www.disneyplus.com/";
+    default:
+      return "#";
+  }
+}
+
+function getPlatformImage(platformName) {
+  switch (platformName.toLowerCase()) {
+    case "disneyplus":
+      return disneyplusImage;
+    case "netflix":
+      return netflixImage;
+    case "watcha":
+      return watchaImage;
+  }
+}
 </script>
 
 <style scoped>
