@@ -8,10 +8,9 @@ class User(AbstractUser):
     last_name = None
     email = None
     is_staff = None
-    is_active = None
     is_superuser = None
     last_login = None
     date_joined = None
 
     username = models.CharField(max_length=100, primary_key=True)
-    password = models.CharField(max_length=100) 
+    password = models.TextField()
