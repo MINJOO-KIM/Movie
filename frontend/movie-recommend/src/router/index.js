@@ -42,6 +42,11 @@ const router = createRouter({
       name: "MyPageView",
       component: () => import("../views/MyPageView.vue"),
     },
+    {
+      path: "/login",
+      name: "LoginView",
+      component: () => import("../views/LoginView.vue"),
+    }
   ],
 });
 
