@@ -1,12 +1,13 @@
 <template>
-  <div class="card h-100">
+  <div class="card h-100 d-flex">
     <!-- <RouterLink
-      :to="{ name: 'MovieDetailView', params: { movie_id: movie.id } }"
-    > -->
+      :to="{ name: 'MovieDetailView', params: { movie_id: movieId } }"
+    /> -->
     <div class="card-body">
       <div>
         <img
-          :src="`https://image.tmdb.org/t/p/original/${props.movie.poster_path}`"
+          class=""
+          :src="`https://image.tmdb.org/t/p/w500${props.movie.posterUrl}`"
           alt="poster-img"
         />
       </div>
@@ -22,7 +23,7 @@ const props = defineProps({
     required: true,
   },
 });
-// console.log(props.movie);
+console.log(props.movie);
 </script>
 
 <style scoped>
@@ -34,5 +35,4 @@ const props = defineProps({
 .card {
   color: black !important;
 }
-
 </style>
