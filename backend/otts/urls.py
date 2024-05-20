@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('platforms/', views.all_platforms),
+    path('parties/', views.parties),
 ]
