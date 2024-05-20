@@ -17,6 +17,7 @@ def all_platforms(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+
 @api_view(['POST', 'GET'])
 def parties(request):
 
@@ -34,6 +35,8 @@ def parties(request):
 
         if serializer.is_valid(raise_exception=True):
             party = serializer.save(owner=user, platform=platform)
+            party.participants.add(user)
+            party.save()
             return Response({"partyId": party.id},
                             status=status.HTTP_200_OK) 
 
@@ -52,6 +55,8 @@ def parties(request):
             return Response(serializer.data,
                             status=status.HTTP_200_OK)
         
+
+
 @api_view(['POST'])
 def join_party(request, party_id):
     result = validate_token(request)
@@ -67,11 +72,9 @@ def join_party(request, party_id):
         return Response({"message": "Already joined"},
                         status=status.HTTP_400_BAD_REQUEST)
     
-
     if party.capacity <= len(party.participants.all()):
         return Response({"message": "Already full"},
                         status=status.HTTP_400_BAD_REQUEST)
-    
     
     party.participants.add(user)
 
