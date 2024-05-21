@@ -52,7 +52,7 @@ import { RouterLink } from 'vue-router';
   margin-left: 5%;
 }
 
-.contents {;
+.contents {
   width: 80%;
   margin-left: 10%;
 }
