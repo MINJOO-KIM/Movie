@@ -1,6 +1,6 @@
 <template>
   <div>
-    PartyJoinView
+    <!-- 참여 중인 파티 있을 때 -->
   </div>
 </template>
 
