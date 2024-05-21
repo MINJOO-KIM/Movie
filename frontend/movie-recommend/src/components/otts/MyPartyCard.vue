@@ -37,6 +37,11 @@
 import MyPartyCreated from '@/components/otts/MyPartyCreated.vue';
 import MyPartyJoined from '@/components/otts/MyPartyJoined.vue';
 import { RouterLink } from 'vue-router';
+
+// 내가 개설한 파티가 있을 때 없을 때 
+// 내가 참여중인 파티가 있을 때 없을 때
+// 구분해서 구성요소를 보여주는 로직이 필요합니다.
+
 </script>
 
 <style scoped>
@@ -45,8 +50,19 @@ import { RouterLink } from 'vue-router';
   border-radius: 2rem;
 
   width: min(75%, 1000px);
-  position: fixed;
-  top: 20%;
+  height: 60vh;
+
+  overflow: auto;
+}
+
+.content-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.content-container::-webkit-scrollbar-thumb {
+  height: 50%;
+  background: #595959;
+  border-radius: 10px;
 }
 
 .left-arrow {
@@ -60,6 +76,8 @@ import { RouterLink } from 'vue-router';
 .contents {
   width: 80%;
   margin-left: 10%;
+
+  margin-bottom: 10%;
 }
 
 .title {
