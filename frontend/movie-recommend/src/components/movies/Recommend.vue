@@ -149,10 +149,11 @@ onMounted(() => {
   border: 1px solid #FFFFFF;
   border-radius: 2rem;
 
-  width: 70vw;
-  margin-left: 15vw;
+  width: 60vw;
+  margin-left: 20vw;
   padding: 5%;
-
+  padding-top: 55px;
+  padding-bottom: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -264,6 +265,10 @@ path {
   width: 70%;
   
   margin-right: 30px;
+}
+
+.best-movie > input {
+  width: 50%;
 }
 
 .genres {
