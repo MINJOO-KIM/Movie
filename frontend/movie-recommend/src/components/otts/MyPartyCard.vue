@@ -4,22 +4,26 @@
     <div class="contents">
       <p class="title">내가 만든 파티</p>
       <div class="content">
-        <div class="join-btn">
-          <img src="@/assets/person-add.svg" alt="">
-          <p class="description">파티 생성하기!</p>
-        </div>
+        <RouterLink :to="{name: 'PartyCreateView'}">
+          <div class="join-btn">
+            <img src="@/assets/person-add.svg" alt="">
+            <p class="description">파티 생성하기!</p>
+          </div>
+        </RouterLink>
         <p>내가 만든 파티가 아직 없어요!</p>
       </div>
       <MyPartyCreated />
       <hr>
       <p class="title">내가 참여중인 파티</p>
-      <div class="content"> 
-      <div class="join-btn">
-        <img src="@/assets/box-arrow-in-right.svg" alt="">
-        <p class="description">파티 참여하기!</p>
+      <div class="content">
+        <RouterLink :to="{name: 'PartyJoinView'}">
+          <div class="join-btn">
+            <img src="@/assets/box-arrow-in-right.svg" alt="">
+            <p class="description">파티 참여하기!</p>
+          </div>
+        </RouterLink>
+        <p>내가 참여중인 파티가 아직 없어요!</p>
       </div>
-      <p>내가 참여중인 파티가 아직 없어요!</p>
-    </div>
       <MyPartyJoined />
     </div>
   </div>
@@ -28,6 +32,7 @@
 <script setup>
 import MyPartyCreated from '@/components/otts/MyPartyCreated.vue';
 import MyPartyJoined from '@/components/otts/MyPartyJoined.vue';
+import { RouterLink } from 'vue-router';
 </script>
 
 <style scoped>
@@ -66,6 +71,10 @@ import MyPartyJoined from '@/components/otts/MyPartyJoined.vue';
   align-items: center;
 }
 
+a {
+  text-decoration: none;
+}
+
 .join-btn {
   border: 1px solid #595959;
   border-radius: 1rem;
@@ -83,6 +92,12 @@ import MyPartyJoined from '@/components/otts/MyPartyJoined.vue';
 
   padding-left: 40px;
   padding-right: 55px;
+
+  cursor: pointer;
+}
+
+.join-btn:hover {
+  background-color: #191919;
 }
 
 .description {
