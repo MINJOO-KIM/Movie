@@ -7,6 +7,7 @@ export const useMovieStore = defineStore(
   () => {
     const movies = ref([]);
     const genres = ref([]);
+    const platforms = ref([]);
     const API_URL = "http://127.0.0.1:8000";
 
     const getRecommendMovies = function () {
@@ -37,8 +38,28 @@ export const useMovieStore = defineStore(
           console.log(err);
         });
     };
+    const getPlatforms = function () {
+      axios({
+        method: "GET",
+        url: `${API_URL}/otts/platforms`,
+      })
+        .then((res) => {
+          console.log(res);
+          platforms.value = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
-    return { movies, getRecommendMovies, genres, getGenres };
+    return {
+      movies,
+      getRecommendMovies,
+      genres,
+      getGenres,
+      platforms,
+      getPlatforms,
+    };
   },
   { persist: true }
 );
