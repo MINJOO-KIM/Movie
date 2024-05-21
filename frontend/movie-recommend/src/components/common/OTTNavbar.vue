@@ -50,7 +50,7 @@
 import { ref } from "vue";
 
 // 화면 구성 작업을 위해 임시로 만든 state 입니다.
-const isAuthenticated = ref(false);
+const isAuthenticated = ref(true);
 </script>
 
 <style scoped>
