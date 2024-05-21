@@ -110,7 +110,7 @@ const submitForm = () => {
   };
 
   axios({
-    method: "POST",
+    method: "GET",
     url: `${API_URL}/otts/parties/`,
     headers: {
       Authorization: `Token ${token}`,
