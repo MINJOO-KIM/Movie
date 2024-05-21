@@ -66,7 +66,7 @@ import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
 
 const API_URL = "http://127.0.0.1:8000";
-const token = "";
+const token = "659183ed1aa3b12b71dc077606ab7ad553835647";
 
 const store = useMovieStore();
 const { platforms, getPlatforms } = store;
@@ -102,11 +102,11 @@ function getPlatformImage(platformName) {
 const submitForm = () => {
   const formData = {
     platform: selectedPlatform.value,
-    id: accountId.value,
-    password: accountPw.value,
+    account_id: accountId.value,
+    account_password: accountPw.value,
     price: price.value,
     capacity: people.value,
-    bankAccount: bankAccount.value,
+    bank_account: bankAccount.value,
   };
 
   axios({
