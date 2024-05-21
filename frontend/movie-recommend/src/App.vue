@@ -10,10 +10,15 @@ const route = useRoute();
   <!-- route 에 따라 Navbar 변경되는 분기 처리 필요 -->
   <MovieNavbar v-if="route.name === 'Home' || route.name === 'MovieDetailView' || route.name === 'AIRecommendView'"/>
   <OTTNavbar v-else/>
-  <img class="background-img" 
-  src="@/assets/main-img.png" alt="">
-  <div class="background">
+  <div v-if="route.name === 'Home' || route.name === 'MovieDetailView' || route.name === 'AIRecommendView'">
+    <img class="background-img" 
+    src="@/assets/main-img.png" alt="">
+    <div class="background">
+    </div>
   </div>
+  <div v-else class="ott-background">
+  </div>
+
   <div class="content">
     <hr />
     <RouterView />
@@ -34,6 +39,7 @@ const route = useRoute();
   opacity: 55%;
 }
 
+
 .background-img {
   position: fixed;
   top: 0px;
@@ -42,6 +48,17 @@ const route = useRoute();
 
   z-index: -2;
 }
+
+.ott-background {
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+
+  position: fixed;
+  top: 0px;
+  z-index: -1;
+}
+
 
 .content {
   margin-top: 56px;

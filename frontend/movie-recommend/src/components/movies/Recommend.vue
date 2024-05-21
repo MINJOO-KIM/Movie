@@ -163,7 +163,7 @@ onMounted(() => {
 
 
 .recommend-input {
-  width: 80%;
+  width: 80%; 
 }
 
 .title {
