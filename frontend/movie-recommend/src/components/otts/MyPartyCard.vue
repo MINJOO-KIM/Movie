@@ -12,8 +12,10 @@
         </RouterLink>
         <p>내가 만든 파티가 아직 없어요!</p>
       </div>
+      <!-- 내가 만든 파티가 있을 때 -->
       <MyPartyCreated />
-      <hr>
+
+      <!-- 내가 참여중인 파티가 없을 때 -->
       <p class="title">내가 참여중인 파티</p>
       <div class="content">
         <RouterLink :to="{name: 'PartyJoinView'}">
@@ -24,6 +26,8 @@
         </RouterLink>
         <p>내가 참여중인 파티가 아직 없어요!</p>
       </div>
+
+      <!-- 내가 참여중인 파티가 있을 때 -->
       <MyPartyJoined />
     </div>
   </div>
@@ -41,7 +45,8 @@ import { RouterLink } from 'vue-router';
   border-radius: 2rem;
 
   width: min(75%, 1000px);
-  height: 80%;
+  position: fixed;
+  top: 20%;
 }
 
 .left-arrow {
