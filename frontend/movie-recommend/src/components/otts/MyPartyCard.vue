@@ -17,7 +17,7 @@
 
       <p class="title">내가 참여중인 파티</p>
       <!-- 내가 참여중인 파티가 있을 때 -->
-      <MyPartyJoined v-if="parties.participate && parties.participate.length > 0"/>
+      <MyPartyJoined v-if="parties.participate && parties.participate.length > 0" :participate-parties="parties.participate"/>
       <!-- 내가 참여중인 파티가 없을 때 -->
       <div v-else class="content">
         <RouterLink :to="{name: 'PartyJoinView'}">
