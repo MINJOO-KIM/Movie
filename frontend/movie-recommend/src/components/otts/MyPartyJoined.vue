@@ -30,7 +30,7 @@
             <label :for="'bank-account-' + index">계좌번호</label>
             <input disabled :id="'bank-account-' + index" type="text" :placeholder="party.bank_account">
           </div>
-          <button class="leave-btn">파티탈퇴</button>
+          <button class="leave-btn" @click="withdrawParty(party)">파티탈퇴</button>
         </div>
       </div>
     </div>
@@ -42,6 +42,7 @@ import { ref } from 'vue';
 import netflixImage from "@/assets/netflix.svg";
 import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
+import axios from 'axios';
 
 const props = defineProps({
   participateParties: {
@@ -77,6 +78,25 @@ const getPlatformName = (platformId) => {
       return "넷플릭스";
   }
 };
+
+const API_URL = "http://127.0.0.1:8000";
+const token = "af22974742877689b5f7a5523f8780396c2dfb9f";
+const withdrawParty = (party) => {
+  axios({
+    method:"DELETE",
+    url:`${API_URL}/otts/parties/${party.id}/withdraw/`,
+    headers:{
+      Authorization: `Token ${token}`,
+    },
+  })
+    .then((res)=>{
+      console.log(res.data);
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
+};
+
 </script>
 
 <style scoped>
