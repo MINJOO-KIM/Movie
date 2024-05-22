@@ -76,8 +76,10 @@ import { RouterLink } from 'vue-router';
   border: 1px solid #AAAAAA;
   border-radius: 15px;
 
-  padding-left: 30px;
-  padding-top: 18px;
+  padding-left: 38px;
+
+  display: flex;
+  align-items: center;
 
   cursor:pointer;
 }
@@ -87,7 +89,10 @@ import { RouterLink } from 'vue-router';
 }
 
 .btn-icon {
-  margin-right: 28px;
+  width: 40px;
+  height: 40px;
+
+  margin-right: 20px;
 }
 
 a {
