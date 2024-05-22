@@ -148,11 +148,7 @@ const submitForm = () => {
   };
   console.log("Params: ", params);
 
-  //   console.log(typeof store.getRecommendMovies(params));
-  store.getRecommendMovies(params).then((recommendedIds) => {
-    const recommended = recommendedIds.join(","); // 문자열로 변환
-    store.updateStoredParams({ ...params, recommended, submitted: true });
-    store.updateStoredParams(updatedParams);
+  store.getRecommendMovies(params).then(() => {
     router.push("/");
   });
 };
