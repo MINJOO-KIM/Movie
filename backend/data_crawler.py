@@ -81,7 +81,7 @@ def add_movie(movie_id, movie_title, platform_name):
                         poster_url=data.get('poster_path'),
                         rating=data.get('vote_average'),
                         overview=data.get('overview'))
-
+            if Movie.objects.filter(title=movie.title).exists():return
             movie.save()
             # 장르 정보 추가
             for genre in data.get('genres'):
@@ -124,7 +124,7 @@ def add_movie(movie_id, movie_title, platform_name):
 # DisneyPlus : 337
 # Watcha : 97
 # Netflix : 8
-# provider_ids = [337, 97, 8]
-# for provider_id in provider_ids: 
-#     for page in range(1, 10 + 1): # 페이지 조절을 통해 다른 정보들도 수집 가능
-#         add_movies(provider_id, page)
+provider_ids = [337, 97, 8]
+for provider_id in provider_ids: 
+    for page in range(11, 40 + 1): # 페이지 조절을 통해 다른 정보들도 수집 가능
+        add_movies(provider_id, page)
