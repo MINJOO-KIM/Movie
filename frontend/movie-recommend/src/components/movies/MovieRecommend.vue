@@ -2,7 +2,7 @@
   <div>
     <h3>당신에게 추천하는 영화는...</h3>
     <div class="card-container">
-      <div v-for="movie in movies" :key="movie.id" class="col">
+      <div v-for="movie in store.movies" :key="movie.id" class="col">
         <MovieCard :movie="movie" />
       </div>
     </div>
@@ -25,7 +25,7 @@ import { useMovieStore } from "@/stores/movie";
 import MovieCard from "@/components/movies/MovieCard.vue";
 
 const store = useMovieStore();
-const { movies, getRecommendMovies } = store;
+const {getRecommendMovies } = store;
 
 onMounted(() => {
   getRecommendMovies();
