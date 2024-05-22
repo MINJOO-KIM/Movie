@@ -9,13 +9,20 @@ export const useMovieStore = defineStore(
     const genres = ref([]);
     const platforms = ref([]);
     const parties = ref([]);
-    const storeBestMovie = ref("");
+    const storedParams = ref({
+      bestMovie: "",
+      genres: "",
+      directors: "",
+      actors: "",
+      recommended: "",
+      submitted: false,
+    });
 
     const API_URL = "http://127.0.0.1:8000";
-    const token = "af22974742877689b5f7a5523f8780396c2dfb9f"
+    const token = "af22974742877689b5f7a5523f8780396c2dfb9f";
 
     const getRecommendMovies = function (params) {
-      axios({
+      return axios({
         method: "GET",
         url: `${API_URL}/movies/recommend`,
         params: params,
@@ -23,8 +30,23 @@ export const useMovieStore = defineStore(
         .then((res) => {
           console.log(res);
           movies.value = res.data;
+          return res.data.map((movie) => movie.movieId.toString()); // 추천된 영화의 ID 목록을 문자열로 반환
         })
-        .catch((err) => console.log(err));
+        .then((recommendedIds) => {
+          const recommended = recommendedIds.join(","); // 문자열로 변환
+          const updatedRecommended = storedParams.value.recommended
+            ? `${storedParams.value.recommended},${recommended}` // 기존 추천영화ID, 새로운 추천영화ID
+            : recommended;
+          updateStoredParams({
+            ...params,
+            recommended: updatedRecommended,
+            submitted: true,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          return [];
+        });
     };
 
     const getGenres = function () {
@@ -40,6 +62,7 @@ export const useMovieStore = defineStore(
           console.log(err);
         });
     };
+
     const getPlatforms = function () {
       axios({
         method: "GET",
@@ -54,21 +77,36 @@ export const useMovieStore = defineStore(
         });
     };
 
-    const getParties = function() {
+    const getParties = function () {
       axios({
-        method:"GET",
+        method: "GET",
         url: `${API_URL}/accounts/`,
         headers: {
           Authorization: `Token ${token}`,
         },
       })
-        .then((res)=>{
+        .then((res) => {
           console.log(res);
           parties.value = res.data;
         })
-        .catch((err)=>{
+        .catch((err) => {
           console.log(err);
-        })
+        });
+    };
+
+    const updateStoredParams = (params) => {
+      storedParams.value = { ...storedParams.value, ...params };
+    };
+
+    const resetParams = () => {
+      storedParams.value = {
+        bestMovie: "",
+        genres: "",
+        directors: "",
+        actors: "",
+        recommended: "",
+        submitted: false, // Keep submitted as false
+      };
     };
 
     return {
@@ -80,7 +118,9 @@ export const useMovieStore = defineStore(
       getPlatforms,
       parties,
       getParties,
-      storeBestMovie,
+      storedParams,
+      updateStoredParams,
+      resetParams,
     };
   },
   { persist: true }

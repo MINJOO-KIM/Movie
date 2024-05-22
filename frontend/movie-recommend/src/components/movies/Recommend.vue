@@ -1,7 +1,6 @@
 <template>
   <div class="research-box">
-    <div class="background">
-    </div>
+    <div class="background"></div>
     <p class="title">당신의 취향을 알려주세요</p>
     <div class="recommend-input">
       <form @submit.prevent="submitForm">
@@ -16,7 +15,11 @@
           </button>
           <button
             type="button"
-            :class="['gender-btn', 'female-btn',{ selected: gender === 'female' }]"
+            :class="[
+              'gender-btn',
+              'female-btn',
+              { selected: gender === 'female' },
+            ]"
             @click="selectGender('female')"
           >
             여
@@ -25,16 +28,41 @@
         </div>
         <div class="age">
           <label for="age">나이:</label>
-          <input class="age-input-box" type="text" id="age" name="age" v-model="age" min="0" />
-          <svg width="15" height="27" viewBox="0 0 15 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path @click="increaseAge" d="M7.5 0L13.9952 11.25H1.00481L7.5 0Z" fill="white"/>
-            <path @click="decreaseAge" d="M7.67135 26.25L1.17616 15L14.1665 15L7.67135 26.25Z" fill="white"/>
+          <input
+            class="age-input-box"
+            type="text"
+            id="age"
+            name="age"
+            v-model="age"
+            min="0"
+          />
+          <svg
+            width="15"
+            height="27"
+            viewBox="0 0 15 27"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              @click="increaseAge"
+              d="M7.5 0L13.9952 11.25H1.00481L7.5 0Z"
+              fill="white"
+            />
+            <path
+              @click="decreaseAge"
+              d="M7.67135 26.25L1.17616 15L14.1665 15L7.67135 26.25Z"
+              fill="white"
+            />
           </svg>
           <li>필수 입력값입니다</li>
         </div>
         <div class="best-movie">
           <label for="best-movie">최근에 재미있게 본 영화</label>
-          <input type="text" id="best-movie" v-model="bestMovie" />
+          <input
+            type="text"
+            id="best-movie"
+            v-model="store.storedParams.bestMovie"
+          />
           <li>필수 입력값입니다</li>
         </div>
         <div class="genres">
@@ -56,11 +84,15 @@
         </div>
         <div class="directors">
           <label for="directors">선호하는 감독</label>
-          <input type="text" id="directors" v-model="directors" />
+          <input
+            type="text"
+            id="directors"
+            v-model="store.storedParams.directors"
+          />
         </div>
         <div class="actors">
           <label for="actors">선호하는 배우</label>
-          <input type="text" id="actors" v-model="actors" />
+          <input type="text" id="actors" v-model="store.storedParams.actors" />
         </div>
         <br /><br />
         <input class="submit-btn" type="submit" value="제출하기!" />
@@ -76,25 +108,21 @@ import { useMovieStore } from "@/stores/movie";
 import router from "@/router";
 
 const store = useMovieStore();
-// const { genres, getGenres, getRecommendMovies, storeBestMovie } = store;
 
 const gender = ref("");
 const age = ref(0);
 const selectedGenres = ref([]);
-const directors = ref("");
-const actors = ref("");
-const bestMovie=ref("");
 
 // 나이 up-down
-const increaseAge = function() {
+const increaseAge = function () {
   age.value++;
-}
+};
 
-const decreaseAge = function() {
+const decreaseAge = function () {
   if (age.value > 0) {
     age.value--;
   }
-}
+};
 
 // 성별 선택 함수
 const selectGender = (selectedGender) => {
@@ -113,16 +141,16 @@ const toggleGenre = (genreId) => {
 // 폼 제출 핸들러 함수
 const submitForm = () => {
   const params = {
-    "best-movie": bestMovie.value,
-    genres: selectedGenres.value,
-    directors: directors.value,
-    actors: actors.value,
+    "best-movie": store.storedParams.bestMovie,
+    genres: selectedGenres.value.join(","), // 문자열로 변환
+    directors: store.storedParams.directors,
+    actors: store.storedParams.actors,
   };
   console.log("Params: ", params);
 
-  store.storeBestMovie = bestMovie.value;
-  store.getRecommendMovies(params)
-  router.push('/');
+  store.getRecommendMovies(params).then(() => {
+    router.push("/");
+  });
 };
 
 onMounted(() => {
@@ -132,7 +160,7 @@ onMounted(() => {
 
 <style scoped>
 .research-box {
-  border: 1px solid #FFFFFF;
+  border: 1px solid #ffffff;
   border-radius: 2rem;
 
   width: 60vw;
@@ -147,9 +175,8 @@ onMounted(() => {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-
 .recommend-input {
-  width: 80%; 
+  width: 80%;
 }
 
 .title {
@@ -163,7 +190,7 @@ label {
   font-weight: bold;
 }
 
-input { 
+input {
   color: black;
 }
 
@@ -185,7 +212,7 @@ li {
   width: 65px;
   height: 30px;
   border-radius: 2rem;
-  border: 1px solid #FFFFFF;
+  border: 1px solid #ffffff;
   margin-left: 40px;
 }
 
@@ -218,14 +245,14 @@ li {
 .age-input-box {
   width: 65px;
   height: 30px;
-  
+
   margin-left: 40px;
   margin-right: 6px;
 
   background-color: black;
   color: white;
 
-  border: 1px solid #FFFFFF;
+  border: 1px solid #ffffff;
   border-radius: 2rem;
 
   text-align: center;
@@ -249,7 +276,7 @@ path {
 
   color: white;
   width: 70%;
-  
+
   margin-right: 30px;
   outline: none;
 }
@@ -282,11 +309,11 @@ path {
 
 .submit-btn {
   width: 100%;
-  
+
   color: white;
   background-color: black;
 
-  border: 1px solid #FFFFFF;
+  border: 1px solid #ffffff;
   border-radius: 1rem;
 
   height: 50px;
