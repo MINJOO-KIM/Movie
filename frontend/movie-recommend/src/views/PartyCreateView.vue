@@ -333,6 +333,9 @@ path {
   border-radius: 1rem;
 
   height: 50px;
+
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .create-btn:hover {
