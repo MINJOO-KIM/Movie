@@ -80,7 +80,7 @@ const getPlatformName = (platformId) => {
 };
 
 const API_URL = "http://127.0.0.1:8000";
-const token = "af22974742877689b5f7a5523f8780396c2dfb9f";
+const token = "be30caa6fa0301f4aadba2b47369c258897ec5dc";
 const withdrawParty = (party) => {
   axios({
     method:"DELETE",
