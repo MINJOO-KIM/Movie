@@ -11,8 +11,12 @@
         <img class="icon" src="@/assets/movie-repeat.svg" alt="repeat-icon" />
         <div class="btn-text">다른 영화도 보여주세요</div>
       </button>
-      <button class="btn d-flex">
-        <img class="icon" src="@/assets/recommend-rewrite.svg" alt="rewrite-icon" />
+      <button class="btn d-flex" @click="rewriteRecommend">
+        <img
+          class="icon"
+          src="@/assets/recommend-rewrite.svg"
+          alt="rewrite-icon"
+        />
         <div class="btn-text">취향을 다시 입력할래요</div>
       </button>
     </div>
@@ -20,16 +24,22 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useMovieStore } from "@/stores/movie";
 import MovieCard from "@/components/movies/MovieCard.vue";
+import router from "@/router";
 
 const store = useMovieStore();
-const {getRecommendMovies } = store;
+const { getRecommendMovies } = store;
 
 onMounted(() => {
   getRecommendMovies();
 });
+
+const rewriteRecommend = () => {
+  store.resetParams();
+  router.push("/");
+};
 </script>
 
 <style scoped>
@@ -44,7 +54,6 @@ button {
 }
 
 .icon {
-  /* margin-left: 10px; */
   width: 40px;
 }
 .btn-text {
@@ -61,8 +70,6 @@ button {
 
   margin: 10px;
   margin-top: 40px;
-  /* border: 1px solid white; */
-
   padding: 10px;
 }
 
@@ -83,5 +90,4 @@ button {
   background-color: #424242;
   border: 1px solid white;
 }
-
 </style>
