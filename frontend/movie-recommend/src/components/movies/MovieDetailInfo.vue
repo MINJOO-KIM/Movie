@@ -184,6 +184,12 @@ button {
   gap: 10px;
 }
 
+
+.movie-platform:hover {
+  border: 2px solid white;
+  border-radius: 20px;
+}
+
 .ott-btn {
   color: white;
   background-color: black;
@@ -195,6 +201,11 @@ button {
   margin-left: 28px;
 
   border-radius: 20px;
+}
+
+.ott-btn:hover {
+  transition: 0.3s;
+  background-color: #474747;
 }
 
 .outer {
