@@ -38,7 +38,7 @@
 <br></br>
 
 
-## 팀
+# 팀
 <table>
   <tbody>
     <tr>
