@@ -8,7 +8,10 @@ export const useMovieStore = defineStore(
     const movies = ref([]);
     const genres = ref([]);
     const platforms = ref([]);
+    const parties = ref([]);
+
     const API_URL = "http://127.0.0.1:8000";
+    const token = "af22974742877689b5f7a5523f8780396c2dfb9f"
 
     const getRecommendMovies = function () {
       axios({
@@ -52,6 +55,23 @@ export const useMovieStore = defineStore(
         });
     };
 
+    const getParties = function() {
+      axios({
+        method:"GET",
+        url: `${API_URL}/accounts/`,
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      })
+        .then((res)=>{
+          console.log(res);
+          parties.value = res.data;
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+    };
+
     return {
       movies,
       getRecommendMovies,
@@ -59,6 +79,8 @@ export const useMovieStore = defineStore(
       getGenres,
       platforms,
       getPlatforms,
+      parties,
+      getParties,
     };
   },
   { persist: true }
