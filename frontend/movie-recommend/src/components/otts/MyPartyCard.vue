@@ -61,15 +61,22 @@ onMounted(() => {
 
   overflow: auto;
 }
-
 .content-container::-webkit-scrollbar {
-  width: 5px;
+    width: 20px; /* 스크롤바의 너비 */
 }
 
 .content-container::-webkit-scrollbar-thumb {
-  height: 50%;
-  background: #595959;
-  border-radius: 10px;
+    height: 50%; /* 스크롤바의 길이 */
+    background: #595959; /* 스크롤바의 색상 */
+    background-clip: padding-box;
+    border:8px solid transparent;
+    border-radius: 20px;
+    border-top-width: 100px;
+    border-bottom-width: 100px;
+}
+
+.content-container::-webkit-scrollbar-track {
+    background: transparent /*스크롤바 뒷 배경 색상*/
 }
 
 .left-arrow {
