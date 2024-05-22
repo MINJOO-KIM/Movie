@@ -7,7 +7,10 @@
       </div>
     </div>
     <div class="btn-area">
-      <button class="btn d-flex">
+      <button
+        class="btn d-flex"
+        @click="getRecommendMovies(store.storedParams)"
+      >
         <img class="icon" src="@/assets/movie-repeat.svg" alt="repeat-icon" />
         <div class="btn-text">다른 영화도 보여주세요</div>
       </button>

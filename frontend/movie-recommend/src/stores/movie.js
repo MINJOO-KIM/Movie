@@ -32,6 +32,17 @@ export const useMovieStore = defineStore(
           movies.value = res.data;
           return res.data.map((movie) => movie.movieId.toString()); // 추천된 영화의 ID 목록을 문자열로 반환
         })
+        .then((recommendedIds) => {
+          const recommended = recommendedIds.join(","); // 문자열로 변환
+          const updatedRecommended = storedParams.value.recommended
+            ? `${storedParams.value.recommended},${recommended}` // 기존 추천영화ID, 새로운 추천영화ID
+            : recommended;
+          updateStoredParams({
+            ...params,
+            recommended: updatedRecommended,
+            submitted: true,
+          });
+        })
         .catch((err) => {
           console.log(err);
           return [];
@@ -87,6 +98,17 @@ export const useMovieStore = defineStore(
       storedParams.value = { ...storedParams.value, ...params };
     };
 
+    const resetParams = () => {
+      storedParams.value = {
+        bestMovie: "",
+        genres: "",
+        directors: "",
+        actors: "",
+        recommended: "",
+        submitted: false, // Keep submitted as false
+      };
+    };
+
     return {
       movies,
       getRecommendMovies,
@@ -98,6 +120,7 @@ export const useMovieStore = defineStore(
       getParties,
       storedParams,
       updateStoredParams,
+      resetParams,
     };
   },
   { persist: true }
