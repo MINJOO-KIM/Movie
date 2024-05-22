@@ -4,7 +4,7 @@
     <div class="contents">
       <p class="title">내가 만든 파티</p>
       <!-- 내가 만든 파티가 있을 때 -->
-      <MyPartyCreated v-if="parties.own && parties.own.length > 0" />
+      <MyPartyCreated v-if="parties.own && parties.own.length > 0" :own-parties="parties.own"/>
       <div v-else class="content">
         <RouterLink :to="{name: 'PartyCreateView'}">
           <div class="join-btn">
