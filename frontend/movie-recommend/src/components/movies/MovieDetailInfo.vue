@@ -1,4 +1,5 @@
 <template>
+  <div class="outer">
   <div class="movie-detail-container">
     <div class="movie-poster">
       <img class="back-btn" src="@/assets/arrow-left-circle.svg" alt="">
@@ -52,8 +53,8 @@
   </div>
 
   <div class="detail-background">
-
   </div>
+</div>
 </template>
 
 <script setup>
@@ -113,8 +114,6 @@ button {
 .movie-detail-container {
   display: flex;
   align-items: center;
-
-  margin: 120px;
   gap: 48px;
 }
 
@@ -158,10 +157,37 @@ button {
   display: flex;
   flex-direction: column;
   gap: 15px;
+
+
+  max-height: 500px;
+
+  overflow: auto;
+}
+
+.info-container::-webkit-scrollbar {
+    width: 40px; /* 스크롤바의 너비 */
+}
+
+.info-container::-webkit-scrollbar-thumb {
+    height: 75%; /* 스크롤바의 길이 */
+    background: #595959; /* 스크롤바의 색상 */
+    background-clip: padding-box;
+    border: 17px solid #171717;
+    border-radius: 50px;
+}
+
+.info-container::-webkit-scrollbar-track {
+    background: #171717; /*스크롤바 뒷 배경 색상*/
 }
 
 .movie-platforms {
   gap: 10px;
+}
+
+
+.movie-platform:hover {
+  border: 2px solid white;
+  border-radius: 20px;
 }
 
 .ott-btn {
@@ -177,15 +203,24 @@ button {
   border-radius: 20px;
 }
 
-.detail-background {
+.ott-btn:hover {
+  transition: 0.3s;
+  background-color: #474747;
+}
+
+.outer {
   width: 100vw;
   height: 100vh;
+  background-color: #171717;
 
   position: fixed;
 
-  background-color: #171717;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  z-index: -1;
+  padding-left: 15vw;
+  padding-right: 15vw;
 }
 
 .back-btn {
