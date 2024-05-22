@@ -78,4 +78,10 @@ button {
   flex-direction: column;
   align-items: center;
 }
+
+.btn:hover {
+  background-color: #424242;
+  border: 1px solid white;
+}
+
 </style>
