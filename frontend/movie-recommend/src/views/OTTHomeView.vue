@@ -10,7 +10,7 @@
     <div class="description">
         넷플릭스, 왓챠, 디즈니플러스까지!<br>
         매달 나가는 구독료 부담스럽지 않게! 내가 보고싶은 영화는 마음대로!<br>
-        안전하게 계정을 공유하는 OO의 OTT 공유 서비스를 이용해보세요!
+        안전하게 계정을 공유하는 OTT 공유 서비스를 이용해보세요!
     </div>
 
     <div class="party-btn-container">
@@ -76,8 +76,10 @@ import { RouterLink } from 'vue-router';
   border: 1px solid #AAAAAA;
   border-radius: 15px;
 
-  padding-left: 30px;
-  padding-top: 18px;
+  padding-left: 38px;
+
+  display: flex;
+  align-items: center;
 
   cursor:pointer;
 }
@@ -87,7 +89,10 @@ import { RouterLink } from 'vue-router';
 }
 
 .btn-icon {
-  margin-right: 28px;
+  width: 40px;
+  height: 40px;
+
+  margin-right: 20px;
 }
 
 a {

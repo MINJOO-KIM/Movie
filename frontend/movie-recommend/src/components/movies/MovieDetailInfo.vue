@@ -190,7 +190,6 @@ button {
 
 .back-btn {
   margin-bottom: 47px;
-
   width: 60px;
 }
 </style>
