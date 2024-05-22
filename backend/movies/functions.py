@@ -157,7 +157,7 @@ def make_filtering_infos(request, movie_title_input):
     
 
     recommended = request.GET.get('recommended', None)
-    if recommended != None:
+    if recommended != None and recommended != "":
         infos.get(FILTERING_KEYS[3]).extend(list(map(int, recommended.replace(' ', '').split(','))))
 
     return infos
