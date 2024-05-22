@@ -265,6 +265,7 @@ path {
   width: 70%;
   
   margin-right: 30px;
+  outline: none;
 }
 
 .best-movie > input {
