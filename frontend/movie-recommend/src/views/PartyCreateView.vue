@@ -1,4 +1,5 @@
 <template>
+  
   <div class="create-container">
     <div class="create-form">
       <div class="header">
@@ -177,7 +178,7 @@ input {
   align-items: center;
   justify-content: center;
 
-  height: 80vh;
+  height: 90vh;
 }
 
 .create-form {
