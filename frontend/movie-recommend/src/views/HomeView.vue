@@ -1,23 +1,19 @@
 <template>
   <div>
-    <p>HomeView</p>
-    <!-- <MovieRecommend /> -->
-    <Recommend />
-    <MovieRecommend />
+    <!-- bestMovie를 이미 입력했을 때 -->
+    <MovieRecommend v-if="store.storeBestMovie" />
+    <!-- bestMovie를 아직 입력하지 않았을 때 -->
+    <Recommend v-else />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
 import { useMovieStore } from "@/stores/movie";
 import MovieRecommend from "@/components/movies/MovieRecommend.vue";
 import Recommend from "@/components/movies/Recommend.vue";
 
 const store = useMovieStore();
 
-// onMounted(() => {
-//   store.getRecommendMovies();
-// });
 </script>
 
 <style lang="scss" scoped></style>

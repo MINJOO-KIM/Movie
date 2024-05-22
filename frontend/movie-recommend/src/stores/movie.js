@@ -9,17 +9,16 @@ export const useMovieStore = defineStore(
     const genres = ref([]);
     const platforms = ref([]);
     const parties = ref([]);
+    const storeBestMovie = ref("");
 
     const API_URL = "http://127.0.0.1:8000";
     const token = "af22974742877689b5f7a5523f8780396c2dfb9f"
 
-    const getRecommendMovies = function () {
+    const getRecommendMovies = function (params) {
       axios({
-        method: "get",
+        method: "GET",
         url: `${API_URL}/movies/recommend`,
-        params: {
-          "best-movie": "인터스텔라",
-        },
+        params: params,
       })
         .then((res) => {
           console.log(res);
@@ -81,6 +80,7 @@ export const useMovieStore = defineStore(
       getPlatforms,
       parties,
       getParties,
+      storeBestMovie,
     };
   },
   { persist: true }

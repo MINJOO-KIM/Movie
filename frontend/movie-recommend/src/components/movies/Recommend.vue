@@ -40,7 +40,7 @@
         <div class="genres">
           <label>선호하는 장르</label>
           <div class="genre-container">
-            <div v-for="genre in genres" :key="genre.id">
+            <div v-for="genre in store.genres" :key="genre.id">
               <button
                 type="button"
                 :class="[
@@ -73,16 +73,17 @@
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useMovieStore } from "@/stores/movie";
+import router from "@/router";
 
 const store = useMovieStore();
-const { genres, getGenres } = store;
+// const { genres, getGenres, getRecommendMovies, storeBestMovie } = store;
 
 const gender = ref("");
 const age = ref(0);
-const bestMovie = ref("");
 const selectedGenres = ref([]);
 const directors = ref("");
 const actors = ref("");
+const bestMovie=ref("");
 
 // 나이 up-down
 const increaseAge = function() {
@@ -111,36 +112,21 @@ const toggleGenre = (genreId) => {
 
 // 폼 제출 핸들러 함수
 const submitForm = () => {
-  const formData = {
-    bestMovie: bestMovie.value,
-    selectedGenres: selectedGenres.value,
+  const params = {
+    "best-movie": bestMovie.value,
+    genres: selectedGenres.value,
     directors: directors.value,
     actors: actors.value,
   };
-  console.log("Form Data: ", formData);
+  console.log("Params: ", params);
 
-  const API_URL = "http://127.0.0.1:8000";
-
-  axios({
-    method: "GET",
-    url: `${API_URL}/movies/recommend`,
-    params: {
-      "best-movie": bestMovie.value,
-      genres: selectedGenres.value,
-      directors: directors.value,
-      actors: actors.value,
-    },
-  })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  store.storeBestMovie = bestMovie.value;
+  store.getRecommendMovies(params)
+  router.push('/');
 };
 
 onMounted(() => {
-  getGenres();
+  store.getGenres();
 });
 </script>
 

@@ -2,7 +2,11 @@
   <div class="outer">
   <div class="movie-detail-container">
     <div class="movie-poster">
-      <img class="back-btn" src="@/assets/arrow-left-circle.svg" alt="">
+      <RouterLink
+      :to="{ name: 'HomeView' }"
+      >
+        <img class="back-btn" src="@/assets/arrow-left-circle.svg" alt="">
+      </RouterLink>
       <img
         class="poster-img"
         :src="`https://image.tmdb.org/t/p/w200${props.movie.posterUrl}`"
@@ -70,9 +74,9 @@ import disneyplusImage from "@/assets/disneyplus.svg";
 const store = useMovieStore();
 const { movies, getRecommendMovies } = store;
 
-onMounted(() => {
-  getRecommendMovies();
-});
+// onMounted(() => {
+//   getRecommendMovies();
+// });
 
 const props = defineProps({
   movie: {
