@@ -1,26 +1,25 @@
 <template>
   <div class="party-container">
-    <!-- 만든 파티 있을 때 -->
-    <div v-for="party in ownParties" :key="party.id">
+    <div v-for="(party, index) in ownParties" :key="party.id">
       <div class="party-info">
         <img class="icon" :src="getPlatformImage(party.platform)" alt="">
         <span>월 {{ party.price }}원으로 {{party.capacity}}명이 참여하고 있어요!</span>
       </div>
       <div class="account-id">
-        <label for="account-id">계정 ID</label>
-        <input :disabled="!isModyfing" id="account-id" type="text" :placeholder="party.account_id">
+        <label :for="'account-id-' + index">계정 ID</label>
+        <input :disabled="!isModyfing[index]" :id="'account-id-' + index" type="text" v-model="party.account_id">
       </div>
       <div class="account-pw">
-        <label for="account-pw">계정 PW</label>
-        <input :disabled="!isModyfing" id="account-pw" type="password" :placeholder="party.account_password">
+        <label :for="'account-pw-' + index">계정 PW</label>
+        <input :disabled="!isModyfing[index]" :id="'account-pw-' + index" type="password" v-model="party.account_password">
       </div>
       <div class="last-info">
         <div class="bank-account">
-          <label for="bank-account">계좌번호</label>
-          <input :disabled="!isModyfing" id="bank-account" type="text" :placeholder="party.bank_account">
+          <label :for="'bank-account-' + index">계좌번호</label>
+          <input :disabled="!isModyfing[index]" :id="'bank-account-' + index" type="text" v-model="party.bank_account">
         </div>
-        <button v-if="!isModyfing" class="modify-btn" @click="isModyfing=true">계정에 변화가 있나요?</button>
-        <button v-else class="modifying-btn" @click="isModyfing=false">수정하기</button>
+        <button v-if="!isModyfing[index]" class="modify-btn" @click="startModifying(index)">계정에 변화가 있나요?</button>
+        <button v-else class="modifying-btn" @click="updateAccount(party, index)">수정하기</button>
       </div>
       <hr>
     </div>
@@ -32,18 +31,24 @@ import netflixImage from "@/assets/netflix.svg";
 import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
 import { ref } from 'vue';
+import axios from "axios";
+import { onMounted } from "vue";
 
-const isModyfing = ref(true);
+const isModyfing = ref([]);
 
 const props = defineProps({
   ownParties: {
     type: Array,
     required: true
   }
-})
+});
 
-const getPlatformImage=(platformId)=>{
-  switch(platformId){
+onMounted(() => {
+  isModyfing.value = props.ownParties.map(() => false);
+});
+
+const getPlatformImage = (platformId) => {
+  switch(platformId) {
     case 1:
       return disneyplusImage;
     case 2:
@@ -51,10 +56,38 @@ const getPlatformImage=(platformId)=>{
     case 3:
       return netflixImage;
   }
-}
+};
 
-// 수정하기 버튼 클릭 시에는 axios 요청도 보낼 수 있게 해주세요
+const API_URL = "http://127.0.0.1:8000";
+const token = "af22974742877689b5f7a5523f8780396c2dfb9f";
 
+const startModifying = (index) => {
+  isModyfing.value[index] = true;
+};
+
+const updateAccount = (party, index) => {
+  const updatedAccount = {
+    id: party.account_id,
+    password: party.account_password,
+    bankAccount: party.bank_account,
+  };
+
+  axios({
+    method: "PUT",
+    url: `${API_URL}/otts/parties/${party.id}/`,
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+    data: updatedAccount,
+  })
+    .then((res) => {
+      console.log(res.data);
+      isModyfing.value[index] = false; 
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 </script>
 
 <style scoped>
@@ -72,7 +105,6 @@ const getPlatformImage=(platformId)=>{
 
 .party-info > span {
   margin-left: 20px;
-
   font-size: 20px;
   font-weight: bold;
 }
@@ -98,19 +130,15 @@ label {
 input {
   margin-left: auto;
   background-color: transparent;
-
   border: 0;
   border-bottom: 1px solid #595959;
-
   outline: none;
 }
 
 .modify-btn,
 .modifying-btn {
-  background-color: #000000; 
-  
+  background-color: #000000;
   padding: 3px 10px;
-
   border: 1px solid #FFFFFF;
   border-radius: 10px;
 }
@@ -118,7 +146,6 @@ input {
 .modifying-btn {
   color: #FF0000;
   font-weight: bold;
-
   width: 150px;
 }
 
@@ -126,7 +153,4 @@ input {
 .modifying-btn:hover {
   background-color: #191919;
 }
-
-
-
 </style>
