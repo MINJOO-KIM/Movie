@@ -232,6 +232,16 @@ def recommend_movies(filtering_infos):
                 if len(results) >= 5:break
                 results.add(movie)
 
+        # 장르, 배우 정보 활용
+        if len(results) < 5:
+                    filter_options = make_filter_query(genre_ids, actor_names=actor_names)
+                    movies = Movie.objects.filter(filter_options).exclude(
+                        id__in=recommended_movie_ids).order_by('-rating')
+                    for movie in movies:
+                        if len(results) >= 5:break
+                        results.add(movie)
+
+
 
         # 장르 정보 활용
         if len(results) < 5:
