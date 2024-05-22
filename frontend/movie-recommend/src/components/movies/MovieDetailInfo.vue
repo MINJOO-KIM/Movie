@@ -127,6 +127,11 @@ button {
   flex-wrap: wrap;
 }
 
+.movie-poster {
+  display: flex;
+  flex-direction: column;
+}
+
 .movie-director,
 .movie-actor {
   margin-left: 10px;
