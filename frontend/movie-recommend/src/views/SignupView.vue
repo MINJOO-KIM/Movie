@@ -8,15 +8,15 @@
               type="text"
               placeholder="아이디"
               id="username"
-              v-model.trim="username"
+              v-model="username"
             />
           </p>
           <p>
             <input
-              type="text"
+              type="password"
               placeholder="비밀번호"
-              id="password1"
-              v-model.trim="password1"
+              id="password"
+              v-model="password"
             />
           </p>
           <button type="submit">가입하기</button>
@@ -30,13 +30,13 @@
     import { useMovieStore } from "@/stores/movie";
     
     const username = ref(null);
-    const password1 = ref(null);
+    const password = ref(null);
     const store = useMovieStore();
     
     const signUp = function () {
         const payload = {
             username: username.value,
-            password1: password1.value,
+            password: password.value,
         }
         store.signUp(payload)
     }
