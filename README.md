@@ -36,7 +36,7 @@
 - HTML/CSS/JavaScript
 
 #### 3. 팀 노션
-[OTTogether](link)
+[OTTogether](https://hail-cave-17f.notion.site/3301bf3f454f40d2ac56d909186a0a42?pvs=4)
 
 #### 4. 프로젝트 파일 구조
 
