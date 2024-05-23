@@ -1,6 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
+import { useRouter } from 'vue-router'
 
 export const useMovieStore = defineStore(
   "movie",
@@ -18,8 +19,10 @@ export const useMovieStore = defineStore(
       submitted: false,
     });
 
+    const router = useRouter()
+    
     const API_URL = "http://127.0.0.1:8000";
-    const token = "af22974742877689b5f7a5523f8780396c2dfb9f";
+    const token = ref(null)
 
     const getRecommendMovies = function (params) {
       return axios({
@@ -28,7 +31,7 @@ export const useMovieStore = defineStore(
         params: params,
       })
         .then((res) => {
-          console.log(res);
+          console.log(res.data);
           movies.value = res.data;
           return res.data.map((movie) => movie.movieId.toString()); // 추천된 영화의 ID 목록을 문자열로 반환
         })
@@ -82,7 +85,7 @@ export const useMovieStore = defineStore(
         method: "GET",
         url: `${API_URL}/accounts/`,
         headers: {
-          Authorization: `Token ${token}`,
+          Authorization: `Token ${token.value}`,
         },
       })
         .then((res) => {
@@ -105,8 +108,69 @@ export const useMovieStore = defineStore(
         directors: "",
         actors: "",
         recommended: "",
-        submitted: false, // Keep submitted as false
+        submitted: false, 
       };
+    };
+
+    const signUp = function (payload) {
+      const username = payload.username
+      const password = payload.password
+  
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/signup/`,
+        data: {
+          username, password,
+        }
+      })
+       .then((response) => {
+         console.log('회원가입 성공!')
+       })
+       .catch((error) => {
+         console.log(error)
+       })
+    }
+
+    const logIn = function (payload) {
+      const { username, password } = payload
+      console.log(username)
+      console.log(password)
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/login/`,
+        data: {
+          username, password
+        }
+      })
+        .then((res) => {
+          localStorage.setItem('token',res.data.key)
+          isLogin.value = true
+          router.push({ name : 'OTTHomeView' })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+
+    const isLogin = ref(false)
+
+    const logOut = function () {
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/logout/`,
+        headers: {
+          Authorization: `Token ${localStorage.getItem('token')}`,
+        }
+      })
+      .then(() => {
+        localStorage.removeItem('token')
+        isLogin.value = false
+        resetParams();
+        router.push({ name: 'OTTHomeView' }); // Redirect to login page or home page
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     };
 
     return {
@@ -121,6 +185,10 @@ export const useMovieStore = defineStore(
       storedParams,
       updateStoredParams,
       resetParams,
+      signUp,
+      logIn,
+      logOut,
+      isLogin,
     };
   },
   { persist: true }

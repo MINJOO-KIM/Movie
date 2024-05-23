@@ -25,18 +25,18 @@
               >영화추천
             </RouterLink>
             <!-- 로그인하지 않은 상태일 때 -->
-            <RouterLink v-if="!isAuthenticated" to="/login" class="nav-link" active-class="active-tab"
+            <RouterLink v-if="!store.isLogin" to="/login" class="nav-link" active-class="active-tab"
               >로그인
             </RouterLink>
-            <RouterLink v-if="!isAuthenticated" to="/signup" class="nav-link" active-class="active-tab"
+            <RouterLink v-if="!store.isLogin" to="/signup" class="nav-link" active-class="active-tab"
               >회원가입
             </RouterLink>
 
             <!-- 로그인 한 상태일 때 -->
-            <form v-if="isAuthenticated" class="nav-link" active-class="active-tab" style="cursor:pointer">
+            <form v-if="store.isLogin" class="nav-link" active-class="active-tab" style="cursor:pointer" @click.prevent="store.logOut">
               로그아웃
             </form>
-            <RouterLink v-if="isAuthenticated" to="/mypage" class="nav-link" active-class="active-tab"
+            <RouterLink v-if="store.isLogin" to="/mypage" class="nav-link" active-class="active-tab"
               >마이페이지
             </RouterLink>
           </div>
@@ -47,10 +47,29 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { useMovieStore } from "@/stores/movie";
+import axios from "axios";
+const store = useMovieStore()
 
-// 화면 구성 작업을 위해 임시로 만든 state 입니다.
-const isAuthenticated = ref(true);
+const API_URL = "http://127.0.0.1:8000";
+const logout = () => {
+  axios({
+    method:"POST",
+    url:`${API_URL}/accounts/logout/`,
+    headers: {
+      Authorization: `Token ${store.token}`,
+    },
+  })
+    .then((res) => {
+      console.log(res.data)
+      // console.log(store.isLogin)
+      // store.isLogin.value=false
+      // store.token.value=null
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 </script>
 
 <style scoped>

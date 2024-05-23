@@ -80,13 +80,12 @@ const getPlatformName = (platformId) => {
 };
 
 const API_URL = "http://127.0.0.1:8000";
-const token = "be30caa6fa0301f4aadba2b47369c258897ec5dc";
 const withdrawParty = (party) => {
   axios({
     method:"DELETE",
     url:`${API_URL}/otts/parties/${party.id}/withdraw/`,
     headers:{
-      Authorization: `Token ${token}`,
+      Authorization: `Token ${store.token}`,
     },
   })
     .then((res)=>{
