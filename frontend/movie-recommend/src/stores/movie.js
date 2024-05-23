@@ -105,32 +105,47 @@ export const useMovieStore = defineStore(
         directors: "",
         actors: "",
         recommended: "",
-        submitted: false, // Keep submitted as false
+        submitted: false, 
       };
     };
 
     const signUp = function (payload) {
-      // 1. 사용자 입력 데이터를 받아
       const username = payload.username
-      const password1 = payload.password1
-      // const { username, password1} = payload
+      const password = payload.password
   
-      // 2. axios로 django에 요청을 보냄
       axios({
         method: 'post',
         url: `${API_URL}/accounts/signup/`,
         data: {
-          username, password1,
+          username, password,
         }
       })
        .then((response) => {
          console.log('회원가입 성공!')
-         const password = password1
-         logIn({ username, password })
        })
        .catch((error) => {
          console.log(error)
        })
+    }
+
+    const logIn = function (payload) {
+      const { username, password } = payload
+      console.log(username)
+      console.log(password)
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/login/`,
+        data: {
+          username, password
+        }
+      })
+        .then((res) => {
+          token.value = res.data.key
+          router.push({ name : 'OTTHomeView' })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
 
     return {
@@ -146,6 +161,7 @@ export const useMovieStore = defineStore(
       updateStoredParams,
       resetParams,
       signUp,
+      logIn,
       token,
     };
   },
