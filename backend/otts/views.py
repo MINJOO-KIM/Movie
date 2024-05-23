@@ -21,8 +21,8 @@ def all_platforms(request):
 @api_view(['POST', 'GET'])
 def parties(request):
 
+    result = validate_token(request)
     if request.method == 'POST':
-        result = validate_token(request)
         if not result[0]: return result[1]
 
         user = request.user
@@ -41,16 +41,20 @@ def parties(request):
                             status=status.HTTP_200_OK) 
 
     elif request.method == 'GET':
+        if not result[0]:
+            user = None
+        else:
+            user = result[1]
 
         try:
             platform_info = request.GET.get('platforms')
             platform_ids =list(map(int, platform_info.replace(' ', '').split(',')))
-            party_list = Party.objects.filter(platform__id__in=platform_ids)
+            party_list = Party.objects.filter(platform__id__in=platform_ids).exclude(participants=user)
             serializer = PartyListSerializer(party_list, many=True)
             return Response(serializer.data,
                             status=status.HTTP_200_OK)
         except:
-            party_list = Party.objects.all()
+            party_list = Party.objects.exclude(participants=user)
             serializer = PartyListSerializer(party_list, many=True)
             return Response(serializer.data,
                             status=status.HTTP_200_OK)

@@ -13,6 +13,10 @@ def validate_token(request):
         return (False, Response({"detail": "Invalid Token"},
                                 status=status.HTTP_401_UNAUTHORIZED))
     
-    return (True, "Success")
+    return (True, get_user_from_token(key))
 
+
+def get_user_from_token(key):
+    token = Token.objects.get(key=key)
+    return token.user
 
