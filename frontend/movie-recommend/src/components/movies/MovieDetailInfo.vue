@@ -2,11 +2,7 @@
   <div class="outer">
   <div class="movie-detail-container">
     <div class="movie-poster">
-      <RouterLink
-      :to="{ name: 'HomeView' }"
-      >
-        <img class="back-btn" src="@/assets/arrow-left-circle.svg" alt="">
-      </RouterLink>
+      <img class="back-btn" src="@/assets/arrow-left-circle.svg" alt="" @click="goback()">
       <img
         class="poster-img"
         :src="`https://image.tmdb.org/t/p/w200${props.movie.posterUrl}`"
@@ -66,6 +62,7 @@ import axios from "axios";
 import { onMounted } from "vue";
 import { useMovieStore } from "@/stores/movie";
 import MovieCard from "@/components/movies/MovieCard.vue";
+import { useRouter } from 'vue-router';
 
 import netflixImage from "@/assets/netflix.svg";
 import watchaImage from "@/assets/watcha.svg";
@@ -77,6 +74,10 @@ const { movies, getRecommendMovies } = store;
 // onMounted(() => {
 //   getRecommendMovies();
 // });
+const router = useRouter();
+const goback = function() {
+  router.go(-1);
+}
 
 const props = defineProps({
   movie: {
@@ -230,5 +231,7 @@ button {
 .back-btn {
   margin-bottom: 47px;
   width: 60px;
+
+  cursor: pointer;
 }
 </style>
