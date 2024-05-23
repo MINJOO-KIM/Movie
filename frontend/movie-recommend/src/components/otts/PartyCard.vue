@@ -20,6 +20,9 @@ import netflixImage from "@/assets/netflix.svg";
 import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
 import axios from "axios";
+import { useMovieStore } from "@/stores/movie";
+import router from "@/router";
+import MyPageView from "@/views/MyPageView.vue";
 
 const props = defineProps({
   party: {
@@ -51,17 +54,19 @@ const getPlatformName = (platformId) => {
 
 const API_URL = "http://127.0.0.1:8000";
 
+const store = useMovieStore();
 const joinParty = (partyId) => {
   axios({
     method: "POST",
     url: `${API_URL}/otts/parties/${partyId}/join/`,
     headers: {
-      Authorization: `Token ${store.token}`,
+      Authorization: `Token ${localStorage.getItem('token')}`,
     },
     data: partyId,
   })
     .then((res) => {
       console.log(res.data);
+      router.push({name:'MyPageView'})
     })
     .catch((err) => {
       console.error(err);

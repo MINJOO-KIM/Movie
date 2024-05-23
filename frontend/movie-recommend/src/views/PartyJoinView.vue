@@ -3,7 +3,7 @@
   <div class="party-join-container">
     <div class="party-join-card">
       <div class="header">
-        <img class="back" src="@/assets/arrow-left-circle.svg" alt="">
+        <img class="back" src="@/assets/arrow-left-circle.svg" alt="" @click="goback()">
         <h2>파티에 자유롭게 참여하세요!</h2>
       </div>
       <div class="search-bar">
@@ -39,6 +39,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { onMounted } from 'vue';
 import PartyCard from '@/components/otts/PartyCard.vue'
+import { useRouter } from 'vue-router';
 
 import netflixImage from "@/assets/netflix.svg";
 import watchaImage from "@/assets/watcha.svg";
@@ -46,6 +47,10 @@ import disneyplusImage from "@/assets/disneyplus.svg";
 
 const store = useMovieStore();
 const { platforms, getPlatforms } = store;
+const router = useRouter()
+const goback = function() {
+  router.go(-1);
+}
 
 function getPlatformImage(platformName) {
   switch (platformName.toLowerCase()) {

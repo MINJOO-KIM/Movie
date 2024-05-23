@@ -3,7 +3,7 @@
   <div class="create-container">
     <div class="create-form">
       <div class="header">
-        <img class="back" src="@/assets/arrow-left-circle.svg" alt="">
+        <img class="back" src="@/assets/arrow-left-circle.svg" alt="" @click="goback()">
         <div class="title">새로운 파티를 생성해주세요!</div>
       </div>
       <div class="recommend-input">
@@ -75,11 +75,16 @@ import { onMounted } from "vue";
 import netflixImage from "@/assets/netflix.svg";
 import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
+import { useRouter } from 'vue-router';
 
 const API_URL = "http://127.0.0.1:8000";
 
 const store = useMovieStore();
 const { platforms, getPlatforms } = store;
+const router = useRouter()
+const goback = function() {
+  router.go(-1);
+}
 
 onMounted(() => {
   getPlatforms();
@@ -130,14 +135,15 @@ const submitForm = () => {
   };
 
   axios({
-    method: "GET",
+    method: "POST",
     url: `${API_URL}/otts/parties/`,
     headers: {
-      Authorization: `Token ${store.token}`,
+      Authorization: `Token ${localStorage.getItem('token')}`,
     },
     data: formData,
   })
     .then((res) => {
+      router.push('/mypage')
       console.log(res.data);
     })
     .catch((err) => {
