@@ -59,8 +59,6 @@ const getPlatformImage = (platformId) => {
 };
 
 const API_URL = "http://127.0.0.1:8000";
-const token = "af22974742877689b5f7a5523f8780396c2dfb9f";
-
 const startModifying = (index) => {
   isModyfing.value[index] = true;
 };
@@ -76,7 +74,7 @@ const updateAccount = (party, index) => {
     method: "PUT",
     url: `${API_URL}/otts/parties/${party.id}/`,
     headers: {
-      Authorization: `Token ${token}`,
+      Authorization: `Token ${store.token}`,
     },
     data: updatedAccount,
   })

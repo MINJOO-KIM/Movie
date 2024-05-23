@@ -77,7 +77,6 @@ import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
 
 const API_URL = "http://127.0.0.1:8000";
-const token = "659183ed1aa3b12b71dc077606ab7ad553835647";
 
 const store = useMovieStore();
 const { platforms, getPlatforms } = store;
@@ -134,7 +133,7 @@ const submitForm = () => {
     method: "GET",
     url: `${API_URL}/otts/parties/`,
     headers: {
-      Authorization: `Token ${token}`,
+      Authorization: `Token ${store.token}`,
     },
     data: formData,
   })

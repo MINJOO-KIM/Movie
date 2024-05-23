@@ -50,14 +50,13 @@ const getPlatformName = (platformId) => {
 }
 
 const API_URL = "http://127.0.0.1:8000";
-const token = "af22974742877689b5f7a5523f8780396c2dfb9f";
 
 const joinParty = (partyId) => {
   axios({
     method: "POST",
     url: `${API_URL}/otts/parties/${partyId}/join/`,
     headers: {
-      Authorization: `Token ${token}`,
+      Authorization: `Token ${store.token}`,
     },
     data: partyId,
   })
