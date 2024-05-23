@@ -68,12 +68,6 @@ import netflixImage from "@/assets/netflix.svg";
 import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
 
-const store = useMovieStore();
-const { movies, getRecommendMovies } = store;
-
-// onMounted(() => {
-//   getRecommendMovies();
-// });
 const router = useRouter();
 const goback = function() {
   router.go(-1);
