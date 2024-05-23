@@ -1,30 +1,29 @@
 ## 📚 목차
 
-1. [프로젝트 개요](#-프로젝트-개요)
+1. [프로젝트 개요](#프로젝트-개요)
 
-2. [팀](#-팀)
+2. [팀](#팀)
    
-3. [서비스 소개](#-서비스-소개)
+3. [서비스 소개](#서비스-소개)
   
-    1. [서비스 기획 목표](#서비스-기획-목표)
+    1. [서비스 기획 목표](#1-서비스-기획-목표)
    
-    2. [ERD](#ERD)
+    2. [ERD](#2-erd)
    
-    3. [Component Structure](#Component-Structure)
+    3. [Component Structure](#3-component-structure)
 
-    4. [구현 기능](#구현-기능)
+    4. [구현 기능](#4-구현-기능)
 
-    5. [영화 추천 알고리즘](#영화-추천-알고리즘)
+    5. [영화 추천 알고리즘](#5-영화-추천-알고리즘)
    
-4. [설치 및 실행](#-설치-및-실행)
+4. [설치 및 실행](#설치-및-실행)
    
-5. [오픈소스 출처](#-오픈소스-출처)
-   
-6. [느낀점](#-느낀점)
+5. [느낀 점](#느낀-점)
+
 
 <hr>
 
-## OTTogether 프로젝트 개요
+## 프로젝트 개요
 
 #### 1. 기간
 2024.05.16 ~ 2024.05.23
@@ -33,49 +32,74 @@
 - Vue
 - Django
 - Sqlite3
+- openai
+- Pinia
+
+#### 3. 팀 노션
+[OTTogether](link)
 
 
 <br></br>
 
 
-# 팀
+## 팀
 <table>
+   <thead>
+      <th>이름</th>
+      <th>역할</th>
+   </thead>
   <tbody>
     <tr>
       <td align="center"><a href="https://github.com/MINJOO-KIM"><img src="https://avatars.githubusercontent.com/u/64532143?v=4" width="100px;" alt=""/><br /><sub><b>FE : 김민주</b></sub></a><br /></td>
+       <td>
+          <ul>
+             <li>한 일 적어보세요~</li>
+             <li>구체적으로 적어보세요~</li>
+          </ul>
+       </td>
+    </tr>
+    <tr>
       <td align="center"><a href="https://github.com/seonminKim1122"><img src="https://avatars.githubusercontent.com/u/124031561?v=4" width="100px;" alt=""/><br /><sub><b>BE : 김선민</b></sub></a><br /></td>
+       <td>
+          <ul>
+             <li>한 일 적어보세요~</li>
+             <li>구체적으로 적어보세요~</li>
+          </ul>
+       </td>
     </tr>
   </tbody>
 </table>
+
 
 
 <br></br>
 
 ## 서비스 소개
 
-#### 1. 서비스 기획 목표
+### 1. 서비스 기획 목표
 - 설문을 통해 선호하는 장르, 감독, 배우 정보를 파악하고 이를 바탕으로 영화 추천
 - 추천된 영화를 시청할 수 있는 OTT 플랫폼에 대한 정보 제공
 - OTT 계정 공유를 통해 추천 받은 영화를 보다 저렴하게 볼 수 있는 기회 제공
 
+
 <br>
 
-#### 2. ERD
+### 2. ERD
 [OTTogether ERD](https://www.erdcloud.com/d/wnBKgdEYokYj8EfQF)
 
 ![image](https://github.com/MINJOO-KIM/Movie/assets/124031561/50c6fcf2-67ad-428e-88e1-5635e83f44e7)
 
 <br>
 
-#### 3. Component Structure
+### 3. Component Structure
 
 <br>
 
-#### 4. 구현 기능
+### 4. 구현 기능
 <table>
   <thead>
     <tr>
-      <th>Navbar 를 통한 이동</th>
+      <th>Chat GPT 기반 영화 추천</th>
       <th>취향 설문</th>
     </tr>
   </thead>
@@ -87,7 +111,7 @@
   </tbody>
   <thead>
     <tr>
-      <th>영화 추천</th>
+      <th>취향 기반 영화 추천</th>
       <th>영화 상세 조회</th>
     </tr>
   </thead>
@@ -147,10 +171,77 @@
   </tbody>
 </table>
 
-#### 5. 영화 추천 알고리즘
-- 취향 기반 영화 추천 알고리즘은 '필터링'에 기반합니다.
+<br><br>
+### 5. 영화 추천 알고리즘
+- 취향 기반 영화 추천 알고리즘은 `필터링`에 기반합니다.
 - 유저가 입력한 '최근 재미있게 본 영화'로부터 '장르, 감독, 배우' 정보를 추출하고 추가 선택 입력 사항이 있는 경우 이를 포함시킵니다.
-- (장르, 감독, 배우) => (장르, 감독) => (장르, 배우) => (장르) 순으로 조건을 만족하는 영화를 탐색하고 찾은 영화가 5개 이상 되는 순간 추가 탐색을 하지 않고 추천 영화를 반환합니다.
+- 추출한 정보와 DB 에 저장된 정보를 비교해 `레벤슈타인 거리`가 가장 짧은 대상이 유저가 입력한 정보의 대상이라고 판단합니다.
+- 결과 정보를 바탕으로 (장르, 감독, 배우) => (장르, 감독) => (장르, 배우) => (장르) 순으로 조건을 만족하는 영화를 조회합니다.
+- 조회 결과가 5개가 되는 순간 추가 탐색을 하지 않고 추천 영화를 반환합니다.
 - 이미 추천 받은 영화가 있는 경우 해당 영화는 제외하고 조회하여 중복 추천을 방지합니다.
+<br><br>
+
+### ※ 레벤슈타인 거리란?
+두 비교군의 삽입, 삭제, 교체 연산에 대한 비용을 계산하여 연산 비용이 높을 수록 다르다고 판단하는 방법
+<br><br>
+일반적으로 영화 제목, 선호하는 감독, 배우 등의 정보는 입력 시 DB 에 저장된 문자열과 아주 근소한 오차가 존재할 가능성이 높으므로 레벤슈타인 거리를 이용하면 올바른 조회가 가능할 것이라 생각하여 적용
 
 <br></br>
+
+
+## 설치 및 실행
+### 1. 프로젝트 다운로드
+  ```
+  git clone [GITHUB_URL]
+  ```
+<br>
+
+### 2. 패키지 설치
+  ```python
+  # django 프로젝트(backend) 로 이동 후
+  pip install -r requirements.txt
+  ```
+
+  ```javascript
+  // vue 프로젝트(front/movie-recommend) 로 이동 후
+  npm install
+  ```
+<br>
+
+### 3. `.env` 파일 생성 및 API 키 작성
+django 프로젝트(backend) 바로 아래에 .env 파일을 생성하고 아래와 같이 작성합니다.
+```
+OPEN_AI_API_KEY='your_open_ai_api_key'
+TMDB_API_TOKEN='your_tmdb_api_token'
+``` 
+<br>
+
+### 4. Migration
+```python
+# django 프로젝트(backend) 로 이동 후
+python manage.py makemigrations
+python manage.py migrate
+python manage.py loaddata data.json
+```
+<br>
+
+### 5. 실행
+```python
+# django 프로젝트(backend) 로 이동 후
+python manage.py runserver
+```
+
+```javascript
+// vue 프로젝트(front/movie-recommend) 로 이동 후
+npm run dev
+```
+
+
+<br></br>
+
+## 느낀 점
+### 김민주
+
+<br>
+
+### 김선민
