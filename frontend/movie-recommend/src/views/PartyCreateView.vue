@@ -1,9 +1,13 @@
 <template>
-  
   <div class="create-container">
     <div class="create-form">
       <div class="header">
-        <img class="back" src="@/assets/arrow-left-circle.svg" alt="" @click="goback()">
+        <img
+          class="back"
+          src="@/assets/arrow-left-circle.svg"
+          alt=""
+          @click="goback()"
+        />
         <div class="title">새로운 파티를 생성해주세요!</div>
       </div>
       <div class="recommend-input">
@@ -26,35 +30,67 @@
                 />
               </button>
             </div>
+            <div v-if="!selectedPlatform && showErrors" class="error">
+              플랫폼은 필수 입력값입니다.
+            </div>
           </div>
           <!-- 인원 입력 -->
           <div class="people">
             <label for="people">인원</label>
-            <input type="text" id="people" v-model="people" min="1"/>
-            <svg width="15" height="27" viewBox="0 0 15 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path @click="increasePeople" d="M7.5 0L13.9952 11.25H1.00481L7.5 0Z" fill="white"/>
-              <path @click="decreasePeople" d="M7.67135 26.25L1.17616 15L14.1665 15L7.67135 26.25Z" fill="white"/>
+            <input type="text" id="people" v-model="people" min="1" />
+            <svg
+              width="15"
+              height="27"
+              viewBox="0 0 15 27"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                @click="increasePeople"
+                d="M7.5 0L13.9952 11.25H1.00481L7.5 0Z"
+                fill="white"
+              />
+              <path
+                @click="decreasePeople"
+                d="M7.67135 26.25L1.17616 15L14.1665 15L7.67135 26.25Z"
+                fill="white"
+              />
             </svg>
+            <div v-if="!people && showErrors" class="error">
+              인원은 필수 입력값입니다.
+            </div>
           </div>
           <!-- 가격 입력 -->
           <div class="price">
             <label for="price">가격</label>
             <input type="text" id="price" v-model="price" min="0" />원
+            <div v-if="!price && showErrors" class="error">
+              가격은 필수 입력값입니다.
+            </div>
           </div>
           <!-- 계정 아이디 입력 -->
           <div class="account-id">
             <label for="account-id">계정 ID</label>
             <input type="text" id="account-id" v-model="accountId" />
+            <div v-if="!accountId && showErrors" class="error">
+              계정 ID는 필수 입력값입니다.
+            </div>
           </div>
           <!-- 계정 비밀번호 입력 -->
           <div class="account-pw">
             <label for="account-pw">계정 PW</label>
             <input type="password" id="account-pw" v-model="accountPw" />
+            <div v-if="!accountPw && showErrors" class="error">
+              계정 PW는 필수 입력값입니다.
+            </div>
           </div>
           <!-- 계좌번호 입력 -->
           <div class="account-number">
             <label for="account-number">계좌번호</label>
             <input type="text" id="account-number" v-model="bankAccount" />
+            <div v-if="!bankAccount && showErrors" class="error">
+              계좌번호는 필수 입력값입니다.
+            </div>
           </div>
           <!-- 제출 버튼 -->
           <br /><br />
@@ -63,7 +99,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup>
@@ -75,16 +110,16 @@ import { onMounted } from "vue";
 import netflixImage from "@/assets/netflix.svg";
 import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
 const API_URL = "http://127.0.0.1:8000";
 
 const store = useMovieStore();
 const { platforms, getPlatforms } = store;
-const router = useRouter()
-const goback = function() {
+const router = useRouter();
+const goback = function () {
   router.go(-1);
-}
+};
 
 onMounted(() => {
   getPlatforms();
@@ -96,7 +131,7 @@ const price = ref(0);
 const accountId = ref("");
 const accountPw = ref("");
 const bankAccount = ref("");
-
+const showErrors = ref(false);
 
 // 플랫폼 선택 함수
 const selectPlatform = (platformId) => {
@@ -115,16 +150,29 @@ function getPlatformImage(platformName) {
 }
 
 // 인원 증감 함수
-const increasePeople = function() {
+const increasePeople = function () {
   people.value++;
-}
+};
 
-const decreasePeople = function() {
+const decreasePeople = function () {
   if (people.value > 0) people.value--;
-}
+};
 
 // 폼 제출 핸들러 함수
 const submitForm = () => {
+  showErrors.value = true;
+
+  if (
+    !selectedPlatform.value ||
+    !accountId.value ||
+    !accountPw.value ||
+    !price.value ||
+    !people.value ||
+    !bankAccount.value
+  ) {
+    return;
+  }
+
   const formData = {
     platform: selectedPlatform.value,
     account_id: accountId.value,
@@ -138,12 +186,12 @@ const submitForm = () => {
     method: "POST",
     url: `${API_URL}/otts/parties/`,
     headers: {
-      Authorization: `Token ${localStorage.getItem('token')}`,
+      Authorization: `Token ${localStorage.getItem("token")}`,
     },
     data: formData,
   })
     .then((res) => {
-      router.push('/mypage')
+      router.push("/mypage");
       console.log(res.data);
     })
     .catch((err) => {
@@ -200,7 +248,6 @@ input {
   overflow: auto;
 }
 
-
 .header {
   display: flex;
   align-items: center;
@@ -220,7 +267,6 @@ input {
   left: 0px;
 }
 
-
 .title {
   font-size: 32px;
   font-weight: bold;
@@ -236,8 +282,7 @@ input {
 .price,
 .account-id,
 .account-pw,
-.account-number
- {
+.account-number {
   display: flex;
   align-items: center;
 }
@@ -252,7 +297,6 @@ input {
 .account-number {
   margin-top: 30px;
 }
-
 
 label {
   font-size: 20px;
@@ -278,7 +322,7 @@ label {
   background-color: black;
   color: white;
 
-  border: 1px solid #FFFFFF;
+  border: 1px solid #ffffff;
   border-radius: 1rem;
 
   text-align: center;
@@ -320,7 +364,7 @@ path {
 
   border-width: 0px;
   border-bottom: 1px solid #595959;
-  
+
   outline: none;
 }
 
@@ -335,7 +379,7 @@ path {
   background-color: black;
   color: white;
 
-  border: 1px solid #FFFFFF;
+  border: 1px solid #ffffff;
   border-radius: 1rem;
 
   height: 50px;
@@ -346,5 +390,11 @@ path {
 
 .create-btn:hover {
   background-color: #171717;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-left: 10px;
 }
 </style>
