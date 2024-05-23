@@ -85,7 +85,7 @@ export const useMovieStore = defineStore(
         method: "GET",
         url: `${API_URL}/accounts/`,
         headers: {
-          Authorization: `Token ${token.value}`,
+          Authorization: `Token ${localStorage.getItem('token')}`,
         },
       })
         .then((res) => {

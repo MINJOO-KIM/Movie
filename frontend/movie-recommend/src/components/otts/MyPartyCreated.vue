@@ -74,7 +74,7 @@ const updateAccount = (party, index) => {
     method: "PUT",
     url: `${API_URL}/otts/parties/${party.id}/`,
     headers: {
-      Authorization: `Token ${store.token}`,
+      Authorization: `Token ${localStorage.getItem('token')}`,
     },
     data: updatedAccount,
   })
