@@ -133,6 +133,9 @@ export const useMovieStore = defineStore(
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.status === 409) {
+            window.alert(error.response.data.message);
+          }
         });
     };
 
@@ -155,6 +158,9 @@ export const useMovieStore = defineStore(
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.status===400) {
+            window.alert(error.response.data.message);
+          }
         });
     };
 
