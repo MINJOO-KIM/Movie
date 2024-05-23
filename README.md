@@ -103,8 +103,10 @@
       <td align="center"><a href="https://github.com/MINJOO-KIM"><img src="https://avatars.githubusercontent.com/u/64532143?v=4" width="100px;" alt=""/><br /><sub><b>FE : 김민주</b></sub></a><br /></td>
        <td>
           <ul>
-             <li>한 일 적어보세요~</li>
-             <li>구체적으로 적어보세요~</li>
+             <li>UI/UX 디자인, CSS</li>
+             <li>영화 취향 입력, 추천, 상세 페이지 프론트엔드 기능 구현</li>
+             <li>OTT 공유 커뮤니티 페이지 프론트엔드 기능 구현</li>
+             <li>회원가입, 로그인 페이지 프론트엔드 기능 구현</li>
           </ul>
        </td>
     </tr>
