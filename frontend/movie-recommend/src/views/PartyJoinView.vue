@@ -76,6 +76,9 @@ const fetchParties = (platformsId) => {
     url: `${API_URL}/otts/parties/`,
     params: {
       platforms: platformsId,
+    },
+    headers: {
+      Authorization: `Token ${localStorage.getItem('token')}`
     }
   })
     .then((res) => {
