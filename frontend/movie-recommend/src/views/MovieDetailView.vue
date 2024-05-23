@@ -8,14 +8,14 @@
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import { useMovieStore } from "@/stores/movie";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import MovieDetailInfo from "@/components/movies/MovieDetailInfo.vue";
 
 // const store = useMovieStore();
 // const { movies, getRecommendMovies } = store;
 const route = useRoute();
+const router = useRouter();
 const moviePk = route.params.movie_id;
-
 const movie = ref({});
 
 const API_URL = "http://127.0.0.1:8000";
@@ -28,7 +28,13 @@ const fetchMovieDetail = (moviePk) => {
       console.log(res);
       movie.value = res.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err)
+      if (err.response.status === 404) {
+        window.alert(err.response.data.message);
+        router.go(-1);
+      }
+    });
 };
 onMounted(() => {
   fetchMovieDetail(moviePk);

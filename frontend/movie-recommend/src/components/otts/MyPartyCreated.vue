@@ -30,11 +30,12 @@
 import netflixImage from "@/assets/netflix.svg";
 import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from "axios";
-import { onMounted } from "vue";
 import { useMovieStore } from "@/stores/movie";
 
+const router = useRouter();
 const isModyfing = ref([]);
 const store = useMovieStore();
 
@@ -88,6 +89,12 @@ const updateAccount = (party, index) => {
       console.error(err);
       if (err.response.status === 401) {
         store.solveUnAuthorized(err);
+      } else if (err.response.status === 404) {
+        window.alert(err.response.data.message);
+        router.go(0);
+      } else {
+        window.alert(err.response.data.message);
+        router.push({name: 'OTTHomeView'});
       }
     });
 };

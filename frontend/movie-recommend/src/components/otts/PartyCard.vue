@@ -72,6 +72,11 @@ const joinParty = (partyId) => {
       console.error(err);
       if (err.response.status === 401) {
         store.solveUnAuthorized(err);
+      } else if (err.response.status === 400) {
+        window.alert(err.response.data.message);
+      } else {
+        window.alert(err.response.data.message);
+        router.go(0);
       }
     });
 }

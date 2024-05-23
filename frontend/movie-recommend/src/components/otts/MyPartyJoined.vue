@@ -43,8 +43,10 @@ import netflixImage from "@/assets/netflix.svg";
 import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
 import axios from 'axios';
-import router from '@/router';
+import {useRouter} from 'vue-router';
 import { useMovieStore } from '@/stores/movie';
+
+const router = useRouter();
 
 const props = defineProps({
   participateParties: {
@@ -99,6 +101,9 @@ const withdrawParty = (party) => {
       console.error(err);
       if (err.response.status === 401) {
         store.solveUnAuthorized(err);
+      } else {
+        window.alert(err.response.data.message);
+        router.go(0);
       }
     })
 };
