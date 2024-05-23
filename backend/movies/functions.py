@@ -347,3 +347,14 @@ def find_movie_in_tmdb_and_save(movie_id):
         movie.platforms.add(platform_obj)
 
     return movie
+
+
+def find_movie_id_from_title(movie_title):
+    TMDB_API_TOKEN = settings.TMDB_API_TOKEN
+    # detail 정보 요청
+    response = requests.get(f'https://api.themoviedb.org/3/search/movie?',
+                        headers={'Authorization': f'Bearer {TMDB_API_TOKEN}'},
+                        params={'language':'ko-KR',
+                                'query': movie_title})
+    
+    return json.loads(response.text).get('results')[0].get('id')

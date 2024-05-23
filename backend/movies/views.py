@@ -68,12 +68,19 @@ def ai_recommend(request):
     query = request.GET.get('q')
     response = client.chat.completions.create(
         model='gpt-4o',
-        messages=[{'role': 'user', 'content': f'영화는 반드시 5개만 추천해줘. 추천 결과는 TMDB 의 영화 id 를 []에 담아 이것만 보여줘. 추천 요청 : {query}'}],
+        messages=[{'role': 'user', 'content': f'영화는 반드시 5개만 추천해줘. 추천 결과는 TMDB 의 영화 title 을 []에 담아 이것만 보여줘. 추천 요청 : {query}'}],
     )
 
     try:
-        recommended_movie_ids = response.choices[0].message.content
-        recommended_movie_ids = list(map(int, recommended_movie_ids[1:-1].split(',')))
+        content = response.choices[0].message.content
+        movie_titles = list(map(lambda title: title[1:-1], content.split(',')))
+        
+        recommended_movie_ids = []
+
+        for movie_title in movie_titles:
+            movie_id = find_movie_id_from_title(movie_title)
+            recommended_movie_ids.append(movie_id)
+
         response_data = []
         for movie_id in recommended_movie_ids:
             movie = find_movie_in_tmdb_and_save(movie_id)
@@ -85,7 +92,8 @@ def ai_recommend(request):
 
         return Response(response_data, status=status.HTTP_200_OK)
     
-    except:
+    except Exception as e:
+        print(e)
         movies = random_recommend(recommended_movie_ids)
         response_data = []
         for movie in movies:
