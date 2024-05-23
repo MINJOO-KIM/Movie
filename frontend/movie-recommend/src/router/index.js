@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import { useMovieStore } from "@/stores/movie";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,4 +56,19 @@ const router = createRouter({
   ],
 });
 
+router.beforeEach((to,from)=>{
+  const store = useMovieStore()
+  if(to.name=='PartyCreateView' && !store.isLogin) {
+    window.alert('로그인이 필요합니다.')
+    return {name:'LoginView'}
+  }
+  else if(to.name=='PartyJoinView' && !store.isLogin) {
+    window.alert('로그인이 필요합니다.')
+    return {name:'LoginView'}
+  }
+  else if(to.name=='MyPageView' && !store.isLogin) {
+    window.alert('로그인이 필요합니다.')
+    return {name:'LoginView'}
+  }
+})
 export default router;
