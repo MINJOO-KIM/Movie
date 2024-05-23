@@ -28,15 +28,65 @@
 #### 1. 기간
 2024.05.16 ~ 2024.05.23
 
-#### 2. 기술 스택
-- Vue
-- Django
-- Sqlite3
-- openai
-- Pinia
+#### 2. 개발 환경
+- Vue 3.4.27
+- Pinia 2.1.7
+- Django 4.2.13
+- Sqlite3 3.21.0
+
 
 #### 3. 팀 노션
 [OTTogether](link)
+
+#### 4. 프로젝트 파일 구조
+
+#### Frontend
+```
+📦src
+ ┣ 📂assets
+ ┃ ┣ 📜arrow-left-circle.svg
+ ┃ ┣ 📜box-arrow-in-right.svg
+ ┃ ┣ 📜caret-down-square.svg
+ ┃ ┣ 📜coin.svg
+ ┃ ┣ 📜disneyplus.svg
+ ┃ ┣ 📜main-img.png
+ ┃ ┣ 📜movie-repeat.svg
+ ┃ ┣ 📜netflix.svg
+ ┃ ┣ 📜person-add.svg
+ ┃ ┣ 📜recommend-rewrite.svg
+ ┃ ┗ 📜watcha.svg
+ ┣ 📂components
+ ┃ ┣ 📂common
+ ┃ ┃ ┣ 📜MovieNavbar.vue
+ ┃ ┃ ┗ 📜OTTNavbar.vue
+ ┃ ┣ 📂movies
+ ┃ ┃ ┣ 📜MovieCard.vue
+ ┃ ┃ ┣ 📜MovieDetailInfo.vue
+ ┃ ┃ ┣ 📜MovieRecommend.vue
+ ┃ ┃ ┗ 📜Recommend.vue
+ ┃ ┗ 📂otts
+ ┃ ┃ ┣ 📜MyPartyCard.vue
+ ┃ ┃ ┣ 📜MyPartyCreated.vue
+ ┃ ┃ ┣ 📜MyPartyJoined.vue
+ ┃ ┃ ┗ 📜PartyCard.vue
+ ┣ 📂router
+ ┃ ┗ 📜index.js
+ ┣ 📂stores
+ ┃ ┗ 📜movie.js
+ ┣ 📂views
+ ┃ ┣ 📜AIRecommendView.vue
+ ┃ ┣ 📜HomeView.vue
+ ┃ ┣ 📜LoginView.vue
+ ┃ ┣ 📜MovieDetailView.vue
+ ┃ ┣ 📜MyPageView.vue
+ ┃ ┣ 📜OTTHomeView.vue
+ ┃ ┣ 📜PartyCreateView.vue
+ ┃ ┣ 📜PartyJoinView.vue
+ ┃ ┗ 📜SignupView.vue
+ ┣ 📜App.vue
+ ┗ 📜main.js
+
+```
 
 
 <br></br>
@@ -62,8 +112,9 @@
       <td align="center"><a href="https://github.com/seonminKim1122"><img src="https://avatars.githubusercontent.com/u/124031561?v=4" width="100px;" alt=""/><br /><sub><b>BE : 김선민</b></sub></a><br /></td>
        <td>
           <ul>
-             <li>한 일 적어보세요~</li>
-             <li>구체적으로 적어보세요~</li>
+             <li>API 서버 개발</li>
+             <li>취향 기반 영화 추천 알고리즘 개발</li>
+             <li>Open AI API 를 활용한 AI 기반의 영화 추천 기능 개발</li>
           </ul>
        </td>
     </tr>
@@ -173,6 +224,8 @@
 
 <br><br>
 ### 5. 영화 추천 알고리즘
+
+#### 사용자 취향 기반 영화 추천
 - 취향 기반 영화 추천 알고리즘은 `필터링`에 기반합니다.
 - 유저가 입력한 '최근 재미있게 본 영화'로부터 '장르, 감독, 배우' 정보를 추출하고 추가 선택 입력 사항이 있는 경우 이를 포함시킵니다.
 - 추출한 정보와 DB 에 저장된 정보를 비교해 `레벤슈타인 거리`가 가장 짧은 대상이 유저가 입력한 정보의 대상이라고 판단합니다.
@@ -181,10 +234,18 @@
 - 이미 추천 받은 영화가 있는 경우 해당 영화는 제외하고 조회하여 중복 추천을 방지합니다.
 <br><br>
 
-### ※ 레벤슈타인 거리란?
+#### ※ 레벤슈타인 거리란?
 두 비교군의 삽입, 삭제, 교체 연산에 대한 비용을 계산하여 연산 비용이 높을 수록 다르다고 판단하는 방법
 <br><br>
 일반적으로 영화 제목, 선호하는 감독, 배우 등의 정보는 입력 시 DB 에 저장된 문자열과 아주 근소한 오차가 존재할 가능성이 높으므로 레벤슈타인 거리를 이용하면 올바른 조회가 가능할 것이라 생각하여 적용
+
+<hr>
+
+#### AI 영화 추천
+- `Open AI API` 를 활용한 영화 추천
+- 유저가 입력한 쿼리에 자체 제작한 프롬프트를 적용해 영화 제목을 리스트 형태로 받고, TMDB API 를 이용해 영화의 ID 및 상세 정보를 조회합니다.
+- 현재 자체 DB 에 저장되어 있지 않은 영화인 경우 DB 에 저장 후 반환하고, 저장되어 있는 경우 DB 에서 데이터를 꺼내 반환합니다.
+- 이를 통해 AI 기반 추천은 물론 서비스 운영을 지속할 수록 자체 DB 를 확장할 수 있습니다.
 
 <br></br>
 
@@ -245,3 +306,6 @@ npm run dev
 <br>
 
 ### 김선민
+API 서버를 설계하고 구축하면서 성공적으로 로직을 수행하는 상황 뿐만 아니라 여러 예외 상황들에 대해 고려하고 각 상황에 맞는 응답을 하는 것의 중요성을 배울 수 있는 프로젝트였습니다.
+특히 파티 참여와 같이 동일한 400 code 더라도 이미 참여하고 있는 파티라서 참여가 이루어지지 않은 건지, 파티에 인원이 가득 차서 참여가 이루어지지 않은 건지 등을 구분하여 response data 를 구성하였습니다.
+이를 통해 유저 입장에서 현재 내가 어떤 문제에 봉착한 상황인지를 인지할 수 있게 하여 유저가 서비스를 이용하는 데 어려움을 덜어줄 수 있다는 점을 배웠습니다.
