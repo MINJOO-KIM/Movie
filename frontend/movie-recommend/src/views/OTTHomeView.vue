@@ -40,10 +40,11 @@ import { RouterLink } from 'vue-router';
   flex-direction: column;
   align-items: center;
   
-  padding-top: 220px;
+  /* padding-top: 220px; */
+  margin-top: 330px;
   
   background-color: black;
-  height: 90vh;
+  height: 30vh;
 }
 
 .platform-icon-container {

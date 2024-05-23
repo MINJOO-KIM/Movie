@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>당신에게 추천하는 영화는...</h3>
+    <h3 style="margin:70px 0 0 30px">당신에게 추천하는 영화는...</h3>
     <div class="card-container">
       <div v-for="movie in store.movies" :key="movie.id" class="col">
         <MovieCard :movie="movie" />
@@ -67,7 +67,7 @@ button {
   flex-wrap: wrap;
 
   margin: 10px;
-  margin-top: 40px;
+  margin-top: 70px;
   padding: 10px;
 }
 
