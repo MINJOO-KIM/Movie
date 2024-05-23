@@ -1,7 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 
 export const useMovieStore = defineStore(
   "movie",
@@ -19,10 +19,10 @@ export const useMovieStore = defineStore(
       submitted: false,
     });
 
-    const router = useRouter()
-    
+    const router = useRouter();
+
     const API_URL = "http://127.0.0.1:8000";
-    const token = ref(null)
+    const token = ref(null);
 
     const getRecommendMovies = function (params) {
       return axios({
@@ -85,7 +85,7 @@ export const useMovieStore = defineStore(
         method: "GET",
         url: `${API_URL}/accounts/`,
         headers: {
-          Authorization: `Token ${localStorage.getItem('token')}`,
+          Authorization: `Token ${localStorage.getItem("token")}`,
         },
       })
         .then((res) => {
@@ -108,69 +108,73 @@ export const useMovieStore = defineStore(
         directors: "",
         actors: "",
         recommended: "",
-        submitted: false, 
+        submitted: false,
       };
     };
 
     const signUp = function (payload) {
-      const username = payload.username
-      const password = payload.password
-  
+      const username = payload.username;
+      const password = payload.password;
+
       axios({
-        method: 'post',
+        method: "post",
         url: `${API_URL}/accounts/signup/`,
         data: {
-          username, password,
-        }
+          username,
+          password,
+        },
       })
-       .then((response) => {
-         console.log('회원가입 성공!')
-       })
-       .catch((error) => {
-         console.log(error)
-       })
-    }
-
-    const logIn = function (payload) {
-      const { username, password } = payload
-      console.log(username)
-      console.log(password)
-      axios({
-        method: 'post',
-        url: `${API_URL}/accounts/login/`,
-        data: {
-          username, password
-        }
-      })
-        .then((res) => {
-          localStorage.setItem('token',res.data.key)
-          isLogin.value = true
-          router.push({ name : 'OTTHomeView' })
+        .then((response) => {
+          console.log("회원가입 성공!");
+          logIn({ username, password });
+          router.push({ name: "OTTHomeView" });
         })
         .catch((error) => {
-          console.log(error)
-        })
-    }
+          console.log(error);
+        });
+    };
 
-    const isLogin = ref(false)
+    const logIn = function (payload) {
+      const { username, password } = payload;
+      console.log(username);
+      console.log(password);
+      axios({
+        method: "post",
+        url: `${API_URL}/accounts/login/`,
+        data: {
+          username,
+          password,
+        },
+      })
+        .then((res) => {
+          localStorage.setItem("token", res.data.key);
+          isLogin.value = true;
+          router.push({ name: "OTTHomeView" });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    const isLogin = ref(false);
 
     const logOut = function () {
       axios({
-        method: 'post',
+        method: "post",
         url: `${API_URL}/accounts/logout/`,
         headers: {
-          Authorization: `Token ${localStorage.getItem('token')}`,
-        }
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
       })
-      .then(() => {
-        localStorage.removeItem('token')
-        isLogin.value = false
-        resetParams();
-        router.push({ name: 'OTTHomeView' }); // Redirect to login page or home page
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        .then(() => {
+          localStorage.removeItem("token");
+          isLogin.value = false;
+          resetParams();
+          router.push({ name: "OTTHomeView" }); // Redirect to login page or home page
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     };
 
     return {
