@@ -189,7 +189,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><img src="https://www.loomly.com/hs-fs/hubfs/Imported_Blog_Media/earth-Apr-03-2024-12-19-31-1897-AM.gif?width=540&height=540&name=earth-Apr-03-2024-12-19-31-1897-AM.gif" width="400px"></td>
+      <td><img src="https://github.com/MINJOO-KIM/Movie/assets/124031561/ef4b8baa-c741-4e5e-964e-d58bf54df9cd.gif" width="400px"></td>
       <td><img src="https://www.loomly.com/hs-fs/hubfs/Imported_Blog_Media/earth-Apr-03-2024-12-19-31-1897-AM.gif?width=540&height=540&name=earth-Apr-03-2024-12-19-31-1897-AM.gif" width="400px"></td>
     </tr>
   </tbody>
