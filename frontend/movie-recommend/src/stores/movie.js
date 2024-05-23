@@ -31,7 +31,7 @@ export const useMovieStore = defineStore(
         params: params,
       })
         .then((res) => {
-          console.log(res);
+          console.log(res.data);
           movies.value = res.data;
           return res.data.map((movie) => movie.movieId.toString()); // 추천된 영화의 ID 목록을 문자열로 반환
         })
@@ -143,20 +143,35 @@ export const useMovieStore = defineStore(
         }
       })
         .then((res) => {
-          token.value = res.data.key
+          localStorage.setItem('token',res.data.key)
+          isLogin.value = true
           router.push({ name : 'OTTHomeView' })
         })
         .catch((error) => {
           console.log(error)
         })
     }
-    const isLogin = computed(() => {
-      if (token.value === null) {
-        return false
-      } else {
-        return true
-      }
-    })
+
+    const isLogin = ref(false)
+
+    const logOut = function () {
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/logout/`,
+        headers: {
+          Authorization: `Token ${localStorage.getItem('token')}`,
+        }
+      })
+      .then(() => {
+        localStorage.removeItem('token')
+        isLogin.value = false
+        resetParams();
+        router.push({ name: 'OTTHomeView' }); // Redirect to login page or home page
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    };
 
     return {
       movies,
@@ -172,7 +187,7 @@ export const useMovieStore = defineStore(
       resetParams,
       signUp,
       logIn,
-      token,
+      logOut,
       isLogin,
     };
   },
