@@ -33,11 +33,6 @@ import MovieCard from "@/components/movies/MovieCard.vue";
 import router from "@/router";
 
 const store = useMovieStore();
-const { getRecommendMovies } = store;
-
-onMounted(() => {
-  getRecommendMovies();
-});
 
 const rewriteRecommend = () => {
   store.resetParams();
