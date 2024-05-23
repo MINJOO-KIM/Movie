@@ -86,7 +86,12 @@ const fetchParties = (platformsId) => {
       parties.value = res.data;
       // console.log(parties)
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      if (err.response.status === 401) {
+        store.solveUnAuthorized(err);
+      }
+    });
 };
 console.log(parties)
 </script>

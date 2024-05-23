@@ -44,6 +44,7 @@ import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
 import axios from 'axios';
 import router from '@/router';
+import { useMovieStore } from '@/stores/movie';
 
 const props = defineProps({
   participateParties: {
@@ -51,6 +52,7 @@ const props = defineProps({
     required: true
   }
 });
+const store = useMovieStore();
 
 const isShow = ref(props.participateParties.map(() => false));
 
@@ -95,6 +97,9 @@ const withdrawParty = (party) => {
     })
     .catch((err)=>{
       console.error(err);
+      if (err.response.status === 401) {
+        store.solveUnAuthorized(err);
+      }
     })
 };
 
