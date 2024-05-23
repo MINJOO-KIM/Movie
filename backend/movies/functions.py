@@ -14,7 +14,15 @@ from Levenshtein import distance
 # 랜덤 라이브러리
 import random
 
-from .models import Movie
+# TMDB 요청 및 응답 데이터 가공에 필요한 라이브러리
+import requests
+import json
+
+# 환경변수 사용
+from django.conf import settings
+
+from .models import Movie, Actor, Director, Genre
+from otts.models import Platform
 
 FILTERING_KEYS = ['genres_ids', 'director_names', 'actor_names', 'recommended_movie_ids']
 
@@ -182,7 +190,7 @@ def make_filter_query(genre_ids=[], director_names=[], actor_names=[]):
     return combined_filter
 
 
-def random_recommend(recommended_movie_ids):
+def random_recommend(recommended_movie_ids=[]):
     last_id = Movie.objects.all().last().id
     results = set()
     while len(results) < 5:
@@ -263,3 +271,79 @@ def recommend_movies(filtering_infos):
             })
         
         return response_data
+    
+
+
+def find_movie_in_tmdb_and_save(movie_id):
+    TMDB_API_TOKEN = settings.TMDB_API_TOKEN
+    # detail 정보 요청
+    response = requests.get(f'https://api.themoviedb.org/3/movie/{movie_id}?',
+                        headers={'Authorization': f'Bearer {TMDB_API_TOKEN}'},
+                        params={'language':'ko-KR',
+                                'append_to_response':'credits'})
+    
+
+    movie_info = json.loads(response.text)
+    if Movie.objects.filter(title=movie_info.get('title')).exists():
+        return Movie.objects.filter(title=movie_info.get('title'))[0]
+
+
+    movie = Movie(title=movie_info.get('title'),
+                  poster_url=movie_info.get('poster_path'),
+                  rating=movie_info.get('vote_average'),
+                  overview=movie_info.get('overview'))
+    
+    movie.save()
+
+    
+    # 장르 정보 추가
+    for genre in movie_info.get('genres'):
+        genre_obj = Genre.objects.filter(name=genre.get('name'))[0]
+        movie.genres.add(genre_obj)
+
+
+    # 배우 정보 저장 및 추가
+    for cast in movie_info.get('credits').get('cast'):
+        if Actor.objects.filter(name=cast.get('name')).exists():
+            actor = Actor.objects.get(name=cast.get('name'))
+        else:
+            actor = Actor(name=cast.get('name'))
+            actor.save()
+        movie.actors.add(actor)
+
+
+    # 감독 정보 저장 및 추가
+    for crew in movie_info.get('credits').get('crew'):
+        if crew.get('job') == 'Director':
+            if Director.objects.filter(name=crew.get('name')).exists():
+                director = Director.objects.get(name=crew.get('name'))
+            else:
+                director = Director(name=crew.get('name'))
+                director.save()
+            movie.directors.add(director)
+
+
+    # OTT 플랫폼 정보 추가
+    response = requests.get('https://api.themoviedb.org/3/movie/479718/watch/providers',
+                            headers={'Authorization':f'Bearer {TMDB_API_TOKEN}'},
+                            params={'movie_id':movie_id})
+    
+    kr_ott_platforms = json.loads(response.text).get('results').get('KR').get('flatrate')
+
+    for ott_platform in kr_ott_platforms:
+        # DisneyPlus : 337
+        # Watcha : 97
+        # Netflix : 8
+        provider_id = ott_platform.get('provider_id')
+        if provider_id not in (337, 97, 8): continue
+
+        if provider_id == 337:
+            platform_obj = Platform.objects.get(id=1)
+        elif provider_id == 97:
+            platform_obj = Platform.objects.get(id=2)
+        else:
+            platform_obj = Platform.objecst.get(id=3)
+
+        movie.platforms.add(platform_obj)
+
+    return movie
