@@ -4,7 +4,7 @@
     <p class="title">당신의 취향을 알려주세요</p>
     <div class="recommend-input">
       <form @submit.prevent="submitForm">
-        <div class="gender">
+        <div class="gender" :class="{ 'error': !gender && submitAttempted }">
           <label>성별:</label>
           <button
             type="button"
@@ -24,9 +24,9 @@
           >
             여
           </button>
-          <li>필수 입력값입니다</li>
+          <li v-if="!gender && submitAttempted">필수 입력값입니다</li>
         </div>
-        <div class="age">
+        <div class="age" :class="{ 'error': !age && submitAttempted }">
           <label for="age">나이:</label>
           <input
             class="age-input-box"
@@ -54,16 +54,16 @@
               fill="white"
             />
           </svg>
-          <li>필수 입력값입니다</li>
+          <li v-if="!age && submitAttempted">필수 입력값입니다</li>
         </div>
-        <div class="best-movie">
+        <div class="best-movie" :class="{ 'error': !store.storedParams.bestMovie && submitAttempted }">
           <label for="best-movie">최근에 재미있게 본 영화</label>
           <input
             type="text"
             id="best-movie"
             v-model="store.storedParams.bestMovie"
           />
-          <li>필수 입력값입니다</li>
+          <li v-if="!store.storedParams.bestMovie && submitAttempted">필수 입력값입니다</li>
         </div>
         <div class="genres">
           <label>선호하는 장르</label>
@@ -112,6 +112,7 @@ const store = useMovieStore();
 const gender = ref("");
 const age = ref(0);
 const selectedGenres = ref([]);
+const submitAttempted = ref(false);
 
 // 나이 up-down
 const increaseAge = function () {
@@ -140,7 +141,15 @@ const toggleGenre = (genreId) => {
 
 // 폼 제출 핸들러 함수
 const submitForm = () => {
+  submitAttempted.value = true;
+
+  if (!gender.value || !age.value || !store.storedParams.bestMovie) {
+    return;
+  }
+
   const params = {
+    gender: gender.value,
+    age: age.value,
     "best-movie": store.storedParams.bestMovie,
     genres: selectedGenres.value.join(","), // 문자열로 변환
     directors: store.storedParams.directors,
@@ -163,11 +172,12 @@ onMounted(() => {
   border: 1px solid #ffffff;
   border-radius: 2rem;
 
+  margin-top: 110px;
   width: 60vw;
   margin-left: 20vw;
   padding: 5%;
-  padding-top: 55px;
-  padding-bottom: 30px;
+  padding-top: 100px;
+  padding-bottom: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -203,6 +213,10 @@ li {
 .best-movie {
   display: flex;
   align-items: center;
+}
+
+.error li {
+  color: red;
 }
 
 .genre-btn,
@@ -320,6 +334,7 @@ path {
 
   font-size: 18px;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .submit-btn:hover {
