@@ -19,7 +19,7 @@ export const useMovieStore = defineStore(
     });
 
     const API_URL = "http://127.0.0.1:8000";
-    const token = "af22974742877689b5f7a5523f8780396c2dfb9f";
+    const token = ref(null)
 
     const getRecommendMovies = function (params) {
       return axios({
@@ -82,7 +82,7 @@ export const useMovieStore = defineStore(
         method: "GET",
         url: `${API_URL}/accounts/`,
         headers: {
-          Authorization: `Token ${token}`,
+          Authorization: `Token ${token.value}`,
         },
       })
         .then((res) => {
@@ -109,6 +109,30 @@ export const useMovieStore = defineStore(
       };
     };
 
+    const signUp = function (payload) {
+      // 1. 사용자 입력 데이터를 받아
+      const username = payload.username
+      const password1 = payload.password1
+      // const { username, password1} = payload
+  
+      // 2. axios로 django에 요청을 보냄
+      axios({
+        method: 'post',
+        url: `${API_URL}/accounts/signup/`,
+        data: {
+          username, password1,
+        }
+      })
+       .then((response) => {
+         console.log('회원가입 성공!')
+         const password = password1
+         logIn({ username, password })
+       })
+       .catch((error) => {
+         console.log(error)
+       })
+    }
+
     return {
       movies,
       getRecommendMovies,
@@ -121,6 +145,8 @@ export const useMovieStore = defineStore(
       storedParams,
       updateStoredParams,
       resetParams,
+      signUp,
+      token,
     };
   },
   { persist: true }
