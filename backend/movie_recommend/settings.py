@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-# import environ
-# import os
+import environ
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -155,11 +155,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
 
-# TMDB API 사용을 위한 설정
-# env = environ.Env(DEBUG=(bool, True))
+# .env 사용을 위한 설정
+env = environ.Env(DEBUG=(bool, True))
 
-# environ.Env.read_env(
-#     env_file=os.path.join(BASE_DIR, '.env')
-# )
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
 
-# TMDB_API_TOKEN=env('TMDB_API_TOKEN')
+TMDB_API_TOKEN=env('TMDB_API_TOKEN')
+OPEN_AI_API_KEY=env('OPEN_AI_API_KEY')
