@@ -196,6 +196,9 @@ const submitForm = () => {
     })
     .catch((err) => {
       console.error(err);
+      if (err.response.status === 401) {
+            store.solveUnAuthorized(err);
+          }
     });
 };
 </script>

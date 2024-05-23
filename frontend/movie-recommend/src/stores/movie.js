@@ -20,9 +20,8 @@ export const useMovieStore = defineStore(
     });
 
     const router = useRouter();
-
+    const isLogin = ref(false);
     const API_URL = "http://127.0.0.1:8000";
-    const token = ref(null);
 
     const getRecommendMovies = function (params) {
       return axios({
@@ -94,6 +93,9 @@ export const useMovieStore = defineStore(
         })
         .catch((err) => {
           console.log(err);
+          if (err.response.status === 401) {
+            solveUnAuthorized(err);
+          }
         });
     };
 
@@ -156,7 +158,7 @@ export const useMovieStore = defineStore(
         });
     };
 
-    const isLogin = ref(false);
+
 
     const logOut = function () {
       axios({
@@ -174,8 +176,18 @@ export const useMovieStore = defineStore(
         })
         .catch((error) => {
           console.error(error);
+          if (error.response.status === 401) {
+            solveUnAuthorized(error);
+          }
         });
     };
+
+    const solveUnAuthorized = function(err) {
+      window.alert(err.response.data.detail);
+      isLogin.value = false;
+      localStorage.removeItem('token');
+      router.push({name: 'LoginView'});
+    }
 
     return {
       movies,
@@ -193,6 +205,7 @@ export const useMovieStore = defineStore(
       logIn,
       logOut,
       isLogin,
+      solveUnAuthorized
     };
   },
   { persist: true }

@@ -33,8 +33,10 @@ import disneyplusImage from "@/assets/disneyplus.svg";
 import { ref } from 'vue';
 import axios from "axios";
 import { onMounted } from "vue";
+import { useMovieStore } from "@/stores/movie";
 
 const isModyfing = ref([]);
+const store = useMovieStore();
 
 const props = defineProps({
   ownParties: {
@@ -84,6 +86,9 @@ const updateAccount = (party, index) => {
     })
     .catch((err) => {
       console.error(err);
+      if (err.response.status === 401) {
+        store.solveUnAuthorized(err);
+      }
     });
 };
 </script>
