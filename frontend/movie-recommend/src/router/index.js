@@ -58,17 +58,14 @@ const router = createRouter({
 
 router.beforeEach((to,from)=>{
   const store = useMovieStore()
-  if(to.name=='PartyCreateView' && !store.isLogin) {
+  if((to.name==='PartyCreateView' || to.name==='PartyJoinView'|| to.name==='MyPageView') && !store.isLogin) {
     window.alert('로그인이 필요합니다.')
     return {name:'LoginView'}
   }
-  else if(to.name=='PartyJoinView' && !store.isLogin) {
-    window.alert('로그인이 필요합니다.')
-    return {name:'LoginView'}
+  if ((to.name==='SignupView' || to.name==='LoginView') && (store.isLogin)){
+    window.alert('이미 로그인이 되어있습니다.')
+    return {name:'HomeView'}
   }
-  else if(to.name=='MyPageView' && !store.isLogin) {
-    window.alert('로그인이 필요합니다.')
-    return {name:'LoginView'}
-  }
-})
+}) 
+
 export default router;
