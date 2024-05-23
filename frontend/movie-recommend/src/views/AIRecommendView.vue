@@ -1,6 +1,5 @@
 <template>
   <div class="outer">
-    <h3>MOVIE-PT</h3>
     <div v-if="isLoading" class="loading">
       <h3>당신이 좋아할 만한 영화를 찾고 있어요...</h3>
       <div class="main">
@@ -14,7 +13,7 @@
         </div>
       </div>
       <div v-else>
-        <h3>어떤 영화를 추천해드릴까요?</h3>
+        <h3 style="margin-top:460px">어떤 영화를 추천해드릴까요?</h3>
       </div>
     </div>
 
@@ -70,6 +69,7 @@ const getRecommendMoviesByAI = function() {
 
 .loading {
   text-align: center;
+  margin-top: 450px;
 }
 
 .main{
@@ -86,6 +86,7 @@ const getRecommendMoviesByAI = function() {
   border: 10px solid #e3e3e3;
   border-bottom: 10px solid #000000;
   border-radius: 50%;
+  margin-top:30px;
   
   animation: load 1.5s linear infinite;
 }
@@ -102,10 +103,10 @@ const getRecommendMoviesByAI = function() {
 form > input {
   background-color: black;
   border: 1px solid #595959;
-  border-radius: 1rem;
+  border-radius: 10px;
 
   width: 500px;
-  height: 50px;
+  height: 40px;
 
   margin-right: 10px;
 }
@@ -129,7 +130,7 @@ form > input {
   flex-wrap: wrap;
 
   margin: 10px;
-  margin-top: 40px;
+  margin-top: 150px;
   padding: 10px;
 }
 

@@ -107,7 +107,7 @@ console.log(parties)
   min-width: 600px;
   height: 700px;
 
-  margin-top: 10vh;
+  margin-top: 15vh;
 }
 
 .party-join-card {
