@@ -1,13 +1,13 @@
 <template>
     <div class="login-container">
-        <form class="login-form">
+        <form class="login-form" @submit.prevent="logIn">
             <h2>로그인</h2>
             <div class="input-container">
                 <p>
-                    <input type="text" placeholder="아이디">
+                    <input type="text" placeholder="아이디" id="username" v-model="username">
                 </p>
                 <p>
-                    <input type="text" placeholder="비밀번호">
+                    <input type="password" placeholder="비밀번호" id="password" v-model="password" >
                 </p>
                 <button type="submit">로그인</button>
             </div>
@@ -16,6 +16,20 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { useMovieStore } from '@/stores/movie'
+
+const username = ref(null)
+const password = ref(null)
+const store = useMovieStore()
+
+const logIn = function () {
+  const payload = {
+    username: username.value,
+    password: password.value
+  }
+  store.logIn(payload)
+}
 </script>
 
 <style scoped>
