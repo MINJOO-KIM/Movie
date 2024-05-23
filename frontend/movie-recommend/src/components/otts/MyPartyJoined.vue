@@ -1,6 +1,6 @@
 <template>
   <div class="party-container">
-    <div v-for="(party, index) in participateParties" :key="party.id">
+    <div v-for="(party, index) in participateParties" :key="party.id" style="margin-bottom: 20px;">
       <div class="summary-infos">
         <div class="left-context">
           <img class="icon" :src="getPlatformImage(party.platform)" alt="">
@@ -43,6 +43,7 @@ import netflixImage from "@/assets/netflix.svg";
 import watchaImage from "@/assets/watcha.svg";
 import disneyplusImage from "@/assets/disneyplus.svg";
 import axios from 'axios';
+import router from '@/router';
 
 const props = defineProps({
   participateParties: {
@@ -85,11 +86,12 @@ const withdrawParty = (party) => {
     method:"DELETE",
     url:`${API_URL}/otts/parties/${party.id}/withdraw/`,
     headers:{
-      Authorization: `Token ${store.token}`,
+      Authorization: `Token ${localStorage.getItem('token')}`,
     },
   })
     .then((res)=>{
       console.log(res.data);
+      router.go(0)
     })
     .catch((err)=>{
       console.error(err);
