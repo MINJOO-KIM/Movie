@@ -192,6 +192,8 @@
     <tr>
       <td><img src="assets\ai-recommend.gif" width="400px"></td>
       <td><img src="assets\survery.gif" width="400px"></td>
+      <td><img src="https://github.com/MINJOO-KIM/Movie/assets/124031561/ef4b8baa-c741-4e5e-964e-d58bf54df9cd.gif" width="400px"></td>
+      <td><img src="https://github.com/MINJOO-KIM/Movie/assets/124031561/8d237a3f-7446-425a-81ea-f126f066afbb.gif" width="400px"></td>
     </tr>
   </tbody>
   <thead>
@@ -344,10 +346,12 @@ npm run dev
 
 <br><br>
 
+
 ### 김선민
 API 서버를 설계하고 구축하면서 성공적으로 로직을 수행하는 상황 뿐만 아니라 여러 예외 상황들에 대해 고려하고 각 상황에 맞는 응답을 하는 것의 중요성을 배울 수 있는 프로젝트였습니다.<br>
 특히 파티 참여와 같이 동일한 400 code 더라도 이미 참여하고 있는 파티라서 참여가 이루어지지 않은 건지, 파티에 인원이 가득 차서 참여가 이루어지지 않은 건지 등을 구분하여 response data 를 구성하였습니다.<br>
 이를 통해 유저 입장에서 현재 내가 어떤 문제에 봉착한 상황인지를 인지할 수 있게 하여 유저가 서비스를 이용하는 데 어려움을 덜어줄 수 있다는 점을 배웠습니다.
+
 
 
 <br></br>
